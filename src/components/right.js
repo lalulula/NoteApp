@@ -2,17 +2,14 @@ import React, { Component } from 'react';
 import TopRight from './topR'
 import BottomRight from './bottomR'
 
-class Right extends Component {
-    state = {  } 
-    render() { 
-        // console.log("Right")
-        return (
+function Right({ notes , deleteNote}){
+    // console.log(notes);
+    return(
         <div className="right">
-            <TopRight/>
-            <BottomRight />
+            <TopRight deleteNote={ deleteNote }/>
+            <BottomRight notes={ notes } />
         </div>
-        );
-    }
-}
+    );
+};
  
 export default Right;
