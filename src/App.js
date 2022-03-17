@@ -90,7 +90,8 @@ function App(){
               deleteNote ={ deleteNote } 
               back2SideBar ={ back2SideBar }
               selectedNote = { getSelectedNote() }
-              onUpdateNote ={ onUpdateNote }/>
+              onUpdateNote ={ onUpdateNote }
+              note2Delete = { getSelectedNote() }/>
               
           <EditProfile closeModal = { closeModal }/>
           {/* Prop name ={ name of the state that is passed down} */}
