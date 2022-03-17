@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import profileImg from './profileImg.jpg'
 
-function TopLeft({addNote}){
+function TopLeft({addNote ,  profileClicked }){
+
     return(
             <div className="topL"> 
-                    <button onClick="document.getElementById('editP').style.display ='block'"
-                            style={{width: 'auto', margin: 0}}>    
+                    <button onClick= { profileClicked }
+                            style={{width: 'auto', margin: 0, }}>    
                             <img src={profileImg} className="material-icons"/></button>
                     <span className="myNotes">My Notes</span>
                     <button className="addNote" onClick= { addNote } ><span className="material-icons">note_add</span></button>
@@ -15,3 +16,5 @@ function TopLeft({addNote}){
 
  
 export default TopLeft;
+
+// "document.getElementById('editP').style.display ='block'"

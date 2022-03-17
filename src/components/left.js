@@ -3,12 +3,17 @@ import React, { Component } from 'react';
 import TopLeft from './topL'
 import BottomLeft from './bottomL'
 
-function Left({ notes , addNote }){
+function Left({ notes , addNote, profileClicked, selectedNote, setSelectedNote }){
     // console.log(notes);
     return(
         <div className = "left">  
-            <TopLeft addNote = {addNote}/>
-            <BottomLeft notes = { notes }/>
+            <TopLeft 
+                addNote = { addNote } 
+                profileClicked = { profileClicked }/>
+            <BottomLeft 
+                notes = { notes }
+                selectedNote ={ selectedNote }
+                setSelectedNote ={ setSelectedNote }/>
         </div>
     );
 };

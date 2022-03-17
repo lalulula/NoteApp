@@ -2,12 +2,17 @@ import React, { Component } from 'react';
 import TopRight from './topR'
 import BottomRight from './bottomR'
 
-function Right({ notes , deleteNote}){
-    // console.log(notes);
+function Right({ notes , deleteNote, selectedNote, onUpdateNote, back2SideBar}){
+
     return(
         <div className="right">
-            <TopRight deleteNote={ deleteNote }/>
-            <BottomRight notes={ notes } />
+            <TopRight 
+                    notes={ notes }
+                    deleteNote={ deleteNote }
+                    back2SideBar={ back2SideBar }/>
+            <BottomRight 
+                    selectedNote = { selectedNote } 
+                    onUpdateNote={ onUpdateNote }/>
         </div>
     );
 };

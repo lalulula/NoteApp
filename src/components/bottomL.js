@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import profileImg from './profileImg.jpg'
 import Note from './note';
-function BottomLeft({ notes }){
-        console.log("HI!!!!",notes);
+function BottomLeft({ notes, selectedNote, setSelectedNote }){
+        console.log(notes);
         return(
             <div className="bottomL">
                     <div className= "search">
@@ -13,7 +13,17 @@ function BottomLeft({ notes }){
 
                      <div id="note_list">  
                         {notes.map( (note) => 
-                            <Note id={note.id} text={note.text} date ={note.date} />)}  
+                            <Note 
+                                key={note.id} 
+                                id={note.id} 
+                                text={note.text} 
+                                date ={new Date(note.date).toLocaleDateString("en",
+                                                        {hour: "2-digit",
+                                                        minute: "2-digit",
+                                                        second: "2-digit"})
+                                        } 
+                                selectedNote ={ selectedNote }
+                                setSelectedNote ={ setSelectedNote }/>)}  
                     </div>
                 </div>
         );
@@ -22,26 +32,4 @@ function BottomLeft({ notes }){
 export default BottomLeft;
 
 
-/////////CLASSSS/////////////////////////
-// class BottomLeft extends Component {
-//     state = {  } 
-//     render() { 
-//         return (
-//             <div className="bottomL">
-//                       <div className= "search">
-//                           <span className="material-icons">search</span>
-//                           <input type="text" name="search" placeholder="Search all notes"
-//                                   style={{border: 'none', marginTop: '10px', marginBottom: '10px'}} />
-//                       </div>
-
-//                       <div id="note_list">    
-//                             <SidebarNote />
-//                             <SidebarNote />
-//                             <SidebarNote />
-//                             <SidebarNote />
-//                       </div>
-//                 </div>
-//         );
-//     }
-// }
  

@@ -67,7 +67,7 @@ body {
 .note_container:hover {
   background-color: lightgray;
 }
-.selected_main {
+.selected_note {
   background-color: rgb(200, 220, 228);
   font-weight: bold;
   border-bottom: 2px dotted black;
@@ -124,7 +124,6 @@ button :hover {
 #back {
   display: none;
 }
-
 textarea {
   height: 690px;
   width: 100%;
@@ -135,6 +134,7 @@ textarea {
   padding: 20px 10px 10px 10px;
   background-color: none;
 }
+
 textarea:focus,
 input:focus {
   outline: none;
@@ -146,6 +146,11 @@ img {
 .topL .myNotes {
   margin-top: 10px;
   margin-bottom: 11px;
+}
+.no-active-note {
+  text-align: center;
+  border-left: 2px solid darkgray;
+  height: 100%;
 }
 /* ///////////////////////////////Profile//////////////////////////////////////// */
 .editContainer {
