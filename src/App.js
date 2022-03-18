@@ -1,29 +1,28 @@
 // import logo from './logo.svg';
 import './App.css';
-import React, { Component, useState } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import Left from './components/left'
 import Right from './components/right'
 import EditProfile from './components/editProfile'
 import{ nanoid } from 'nanoid';
-// import uuid from 'react-uuid';
+
 
 function App(){
+  const initalNoteArray=[ { id: nanoid(),
+    text:"CSE316",
+    date: Date.now()
+  },
 
-  const image = "profileImg.jpg";
+  { id: nanoid(),
+    text:"This is a note with a long line of text. Notice that the text will automatically wrap to the next line once it reaches the right side of the screen.",
+    date: Date.now()
+  } ]
 
-  const [notes, setNotes] = useState([
-    { id: nanoid(),
-      text:"CSE316",
-      date: Date.now()
-    },
-
-    { id: nanoid(),
-      text:"This is a note with a long line of text. Notice that the text will automatically wrap to the next line once it reaches the right side of the screen.",
-      date: Date.now()
-    }
-]) 
+  const [notes, setNotes] = useState(JSON.parse(localStorage.myNotes) || initalNoteArray) 
   const[selectedNote, setSelectedNote] = useState('');
 
+  useEffect( ()=>{
+    localStorage.setItem("myNotes", JSON.stringify(notes))}, [notes] );
 
   const addNote = () => {
     console.log("ADDED")
@@ -53,21 +52,19 @@ function App(){
   }
 
   const getSelectedNote=()=>{
-    // return (notes.find((note) => note.id === selectedNote)).text;
     return notes.find((note) => note.id === selectedNote);
   }
-
-  const onUpdateNote = (updatedNote) => {
-    const updatedNotesArray = notes.map((note) =>{
-        if(note.id === selectedNote){
-          return updatedNote;
-        }
-        return note;
+  const onEditNote = (updatedNote) => {
+    const updatedNotesArray = notes.map((note)=>{
+      if(note.id === selectedNote){
+        return updatedNote;
+      }
+      return note;
     });
     setNotes(updatedNotesArray);
   }
 
-  // notes[0].className ={"selected_note"};
+
   return (
     <React.Fragment>
       
@@ -90,8 +87,8 @@ function App(){
               deleteNote ={ deleteNote } 
               back2SideBar ={ back2SideBar }
               selectedNote = { getSelectedNote() }
-              onUpdateNote ={ onUpdateNote }
-              note2Delete = { getSelectedNote() }/>
+              note2Delete = { getSelectedNote() }
+              onEditNote = {onEditNote}/>
               
           <EditProfile closeModal = { closeModal }/>
           {/* Prop name ={ name of the state that is passed down} */}

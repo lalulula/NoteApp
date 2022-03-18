@@ -1,14 +1,7 @@
 import React, { Component } from 'react';
-function BottomRight( {selectedNote ,onUpdateNote} ){
+function BottomRight( {selectedNote , onEditNote} ){
     // console.log(Object.values(selectedNote));
     console.log(selectedNote)
-    const onEdit = (key, value) =>{
-        onUpdateNote({
-            id: selectedNote.id,
-            [key]: value,
-            date : Date.now()
-        })
-    }
 
     const txtStyle={
             height: "690px",
@@ -23,17 +16,27 @@ function BottomRight( {selectedNote ,onUpdateNote} ){
             borderLeft: "2px solid darkgray",
             textAlign: "center"
     }
-    
+
+    const handleChange = ( value) => {  //"text" & value
+        onEditNote({
+            id: selectedNote.id,
+            text: value, 
+            date: Date.now()
+        });
+    }
+
     if(!selectedNote) {
-        return <textarea id="textA" disabled={true} style={txtStyle}>
-            NO notes selected
+        return <textarea disabled={true} style={txtStyle}>
+                NO notes selected
                 </textarea>
     }
 
     return(
         <div className="bottomR">
-            <textarea id="textA" value={selectedNote.text}
-                    onKeyUp={console.log("GOING TO SAVE LATER")} 
+            <textarea id="textA" 
+                    value={selectedNote.text}
+                    onChange={ (event) => handleChange( event.target.value)}
+                    // onKeyUp={console.log("GOING TO SAVE LATER")} 
                     style={{fontFamily: 'Helvetica, Arial'}}>
             </textarea>
         </div>
