@@ -134,10 +134,19 @@ textarea {
   padding: 20px 10px 10px 10px;
   background-color: none;
 }
-
 textarea:focus,
 input:focus {
   outline: none;
+}
+.tagArea {
+  background: lightgray;
+  border: none;
+  position: fixed;
+  overflow: visible;
+  bottom: 0px;
+  height: 30px;
+  width: 90%;
+  margin: 2px;
 }
 img {
   width: 30px;
@@ -194,6 +203,7 @@ img {
 .p2 {
   display: flex;
   flex-direction: column;
+  margin: 20px 0 30px 0;
 }
 .save {
   background-size: 20px;
@@ -210,7 +220,6 @@ img {
     display: none;
   }
   #container {
-    display: inline-flexbox;
     flex-direction: column-reverse;
   }
   #back {

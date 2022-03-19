@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import profileImg from './profileImg.jpg'
 import Note from './note';
 function BottomLeft({ notes, selectedNote, setSelectedNote }){
-        console.log(notes);
+
         return(
             <div className="bottomL">
                     <div className= "search">

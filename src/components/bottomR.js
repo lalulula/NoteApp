@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
+import Tags from './tag';
 function BottomRight( {selectedNote , onEditNote} ){
-    // console.log(Object.values(selectedNote));
-    console.log(selectedNote)
-
     const txtStyle={
             height: "690px",
             width: "100%",
@@ -36,8 +34,8 @@ function BottomRight( {selectedNote , onEditNote} ){
             <textarea id="textA" 
                     value={selectedNote.text}
                     onChange={ (event) => handleChange( event.target.value)}
-                    // onKeyUp={console.log("GOING TO SAVE LATER")} 
                     style={{fontFamily: 'Helvetica, Arial'}}>
+                    <Tags/>
             </textarea>
         </div>
     );

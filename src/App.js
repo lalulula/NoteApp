@@ -6,7 +6,6 @@ import Right from './components/right'
 import EditProfile from './components/editProfile'
 import{ nanoid } from 'nanoid';
 
-
 function App(){
   const initalNoteArray=[ { id: nanoid(),
     text:"CSE316",
@@ -18,7 +17,7 @@ function App(){
     date: Date.now()
   } ]
 
-  const [notes, setNotes] = useState(JSON.parse(localStorage.myNotes) || initalNoteArray) 
+  const [notes, setNotes] = useState(JSON.parse(localStorage.myNotes) || initalNoteArray) //use local Storage 
   const[selectedNote, setSelectedNote] = useState('');
 
   useEffect( ()=>{
@@ -35,16 +34,8 @@ function App(){
   }
 
   const deleteNote = (idToDelete) => {
-    console.log("DELETED")
-    setNotes(notes.filter((note) => note.id != idToDelete))
-  }
-
-  const profileClicked = () =>{
-    console.log("PROFILE CLICKED")
-  }
-
-  const closeModal = () =>{
-    console.log("MODAL CLOSED");
+    setNotes(notes.filter((note) => note.id !== idToDelete))
+    // if(idToDelete)
   }
 
   const back2SideBar = () =>{
@@ -52,7 +43,9 @@ function App(){
   }
 
   const getSelectedNote=()=>{
+    // console.log(notes.indexOf(notes.find((note) => note.id === selectedNote)));
     return notes.find((note) => note.id === selectedNote);
+
   }
   const onEditNote = (updatedNote) => {
     const updatedNotesArray = notes.map((note)=>{
@@ -63,6 +56,42 @@ function App(){
     });
     setNotes(updatedNotesArray);
   }
+///////////////profile/////////////////////////////////////////
+
+  const profileClicked = () =>{
+    console.log("PROFILE CLICKED", document.getElementById('editP'))
+    document.getElementById('editP').style.display= "block"
+  }
+
+  window.onclick = function(event) {
+    if (event.target === document.getElementById('editP')) {
+      console.log("CLICKED")
+      document.getElementById('editP').style.display = "none";
+    }
+  }
+  const closeModal = () =>{
+    console.log("MODAL CLOSED", document.getElementById('editP'));
+    document.getElementById('editP').style.display= "none";
+  }
+
+  const[formValues, updateFormValues] = useState(JSON.parse(localStorage.profileInfo) || [])
+
+  useEffect( ()=>{
+    localStorage.setItem("profileInfo", JSON.stringify(formValues), [formValues])
+  });
+
+  const onSave = (e) =>{
+    // e.preventDefault();
+    alert("Saved");
+  }
+  const handleChangeProfile = (e)=>{
+    updateFormValues((prevValues)=>({
+      ...prevValues,
+      [e.target.name] : e.target.value
+    }))
+  }
+
+
 
 
   return (
@@ -90,8 +119,13 @@ function App(){
               note2Delete = { getSelectedNote() }
               onEditNote = {onEditNote}/>
               
-          <EditProfile closeModal = { closeModal }/>
-          {/* Prop name ={ name of the state that is passed down} */}
+          <EditProfile 
+              closeModal = { closeModal }
+              onSave = {onSave}
+              handleChangeProfile = { handleChangeProfile }
+              formValues = { formValues }
+              />
+          {/* Prop name(내가설정) ={ name of the state that is passed down} */}
       </div>
 
     </React.Fragment>

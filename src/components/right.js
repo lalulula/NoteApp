@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import TopRight from './topR'
 import BottomRight from './bottomR'
+import Tags from './tag';
 
 function Right({ notes , deleteNote, selectedNote,  back2SideBar, note2Delete, onEditNote}){
 
@@ -14,6 +15,7 @@ function Right({ notes , deleteNote, selectedNote,  back2SideBar, note2Delete, o
             <BottomRight 
                     selectedNote = { selectedNote } 
                     onEditNote = { onEditNote }/>
+            <Tags/>
         </div>
     );
 };

@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import profileImg from './profileImg.jpg'
-function EditProfile({ closeModal }){
+
+
+function EditProfile({ closeModal, onSave, handleChangeProfile, formValues}){
     return(
             <div id="editP" className="modal">
                 <div className="modal-content">
+                    {/* <form > */}
                     <div className="editContainer">
                         <div className="p0">
                             <h3>Edit profile</h3>
@@ -16,8 +19,10 @@ function EditProfile({ closeModal }){
                             <button><span>Remove Image</span></button>
                         </div>
                         <div className="p2">
-                            Name<br/> <input type="text" name="name"/><br/>
-                            Email<br/> <input type="text" size="30" name="email"/><br/>
+                            Name<br/> <input type="text" id="pName"  name="pName" value={formValues.pName}
+                                                onChange={handleChangeProfile}/><br/>
+                            Email<br/> <input type="text" id="pEmail" size="30" name="pEmail" value={formValues.pEmail}
+                                                onChange={handleChangeProfile}/><br/>
                             Color Scheme<br/>
                             <select id="theme">
                                 <option value="Light">Light</option>
@@ -25,10 +30,11 @@ function EditProfile({ closeModal }){
                             </select>
                         </div>
                         <div className="p3">
-                            <button><span className="save">Save</span></button>
+                            <button onClick = {onSave}><span className="save">Save</span></button>
                             <button><span>Logout</span></button>
                         </div>
                     </div>
+                    {/* </form> */}
                 </div>  
             </div>  
     );
