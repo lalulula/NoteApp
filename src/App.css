@@ -25,6 +25,7 @@ body {
   display: flex;
   flex-direction: column;
   width: var(--sidebar-width); /* width: 240px; */
+  border-right: 2px solid darkgray;
 }
 
 .topL {
@@ -50,6 +51,7 @@ body {
   display: flex;
   flex-direction: column;
   overflow: auto;
+  width: var(--sidebar-width); /* width: 240px; */
   border: 2px solid darkgray;
   background: #eeeeee;
   border-radius: 7px;
@@ -99,11 +101,11 @@ body {
   justify-content: space-between;
   align-items: center;
   border-bottom: 2px solid darkgray;
-  border-left: 2px solid darkgray;
+  /* border-left: 2px solid darkgray; */
   border-top: 2px solid darkgray;
 }
 .bottomR {
-  border-left: 2px solid darkgray;
+  /* border-left: 2px solid darkgray; */
   flex: 1;
 }
 
@@ -138,16 +140,52 @@ textarea:focus,
 input:focus {
   outline: none;
 }
-.tagArea {
-  background: lightgray;
+/* 여기부터 태그 디자인 */
+.tagContainer {
+  font-family: Helvetica, Arial;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: rgb(235, 235, 235);
   border: none;
   position: fixed;
   overflow: visible;
   bottom: 0px;
-  height: 30px;
-  width: 90%;
+  height: auto;
+  width: auto;
   margin: 2px;
+  padding: 5px;
+  border: 5px solid transparent;
 }
+.tag {
+  font-size: 15px;
+  border: 2px solid rgb(148, 144, 144);
+  margin: 3px;
+  padding: 2px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+}
+.tagContainer input {
+  font-size: 15px;
+  border: 2px solid rgb(247, 247, 247);
+  margin: 0 2.5px 0 2.5px;
+  padding: 2px;
+  border-radius: 5px;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  outline: none;
+}
+.tagContainer span {
+  font-size: 10px;
+  margin: 0 2.5px 0 2.5px;
+  padding: 2px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
 img {
   width: 30px;
   border-radius: 50%;
@@ -156,11 +194,11 @@ img {
   margin-top: 10px;
   margin-bottom: 11px;
 }
-.no-active-note {
+/* .no-active-note {
   text-align: center;
   border-left: 2px solid darkgray;
   height: 100%;
-}
+} */
 /* ///////////////////////////////Profile//////////////////////////////////////// */
 .editContainer {
   padding: 10px;
@@ -221,6 +259,12 @@ img {
   }
   #container {
     flex-direction: column-reverse;
+  }
+  .left {
+    width: auto;
+  }
+  .search {
+    justify-content: center;
   }
   #back {
     display: inline;

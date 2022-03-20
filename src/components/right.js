@@ -3,10 +3,13 @@ import TopRight from './topR'
 import BottomRight from './bottomR'
 import Tags from './tag';
 
-function Right({ notes , deleteNote, selectedNote,  back2SideBar, note2Delete, onEditNote}){
+function Right({ notes , deleteNote, selectedNote,  back2SideBar, note2Delete, onEditNote, tags, saveTag, deleteTag, ifSmallScreen, showSideBar }){
 
     return(
-        <div className="right">
+        <div className="right" 
+            style={ifSmallScreen? 
+                    {display: showSideBar? 'none': 'block'}: 
+                    {display:'block'}}>
             <TopRight 
                     notes={ notes }
                     deleteNote={ deleteNote }
@@ -15,7 +18,11 @@ function Right({ notes , deleteNote, selectedNote,  back2SideBar, note2Delete, o
             <BottomRight 
                     selectedNote = { selectedNote } 
                     onEditNote = { onEditNote }/>
-            <Tags/>
+            <Tags 
+                    tags={tags} 
+                    saveTag={saveTag}
+                    deleteTag = { deleteTag }
+                    selectedNote = { selectedNote }  />
         </div>
     );
 };

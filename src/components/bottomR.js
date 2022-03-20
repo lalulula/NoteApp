@@ -11,11 +11,10 @@ function BottomRight( {selectedNote , onEditNote} ){
             padding: "20px 10px 10px 10px",
             backgroundColor: "none",
             fontFamily: "Helvetica, Arial",
-            borderLeft: "2px solid darkgray",
             textAlign: "center"
     }
 
-    const handleChange = ( value) => {  //"text" & value
+    const handleChange = (value) => {  
         onEditNote({
             id: selectedNote.id,
             text: value, 
@@ -35,8 +34,8 @@ function BottomRight( {selectedNote , onEditNote} ){
                     value={selectedNote.text}
                     onChange={ (event) => handleChange( event.target.value)}
                     style={{fontFamily: 'Helvetica, Arial'}}>
-                    <Tags/>
             </textarea>
+            
         </div>
     );
 }

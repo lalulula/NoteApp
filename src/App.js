@@ -33,17 +33,32 @@ function App(){
     setNotes([newNote, ...notes]);
   }
 
-  const deleteNote = (idToDelete) => {
-    setNotes(notes.filter((note) => note.id !== idToDelete))
-    // if(idToDelete)
+  const handleSelectedNote=(id) =>{ //clicking on a note in the list
+    setSelectedNote(id);
+    setShowSideBar(false);
   }
 
-  const back2SideBar = () =>{
-    console.log("RETURNED TO SIDEBAR");
+  const deleteNote = (e) => {
+    const index2Delete = notes.indexOf(notes.find((note) => note.id === selectedNote));
+    // setNotes(notes.filter((note) => note.id !== e))
+    if(index2Delete == 0){
+      setNotes(notes.filter((note) => note.id !== e))
+      console.log(notes)
+      setSelectedNote(notes[0].id)
+    }
+    else if(index2Delete == notes.length-1){
+      setNotes(notes.filter((note) => note.id !== e))
+      setSelectedNote(notes[notes.length-1].id)
+    }
+    else{
+      const newDisplayedNote = index2Delete;
+      setNotes(notes.filter((note) => note.id !== e))
+      setSelectedNote(notes[newDisplayedNote ].id)
+    }
   }
+
 
   const getSelectedNote=()=>{
-    // console.log(notes.indexOf(notes.find((note) => note.id === selectedNote)));
     return notes.find((note) => note.id === selectedNote);
 
   }
@@ -56,18 +71,16 @@ function App(){
     });
     setNotes(updatedNotesArray);
   }
-///////////////profile/////////////////////////////////////////
-
+////////////////////////profile/////////////////////////////////////////
+window.onclick = function(event) {
+  if (event.target === document.getElementById('editP')) {
+    console.log("CLICKED")
+    document.getElementById('editP').style.display = "none";
+  }
+}
   const profileClicked = () =>{
     console.log("PROFILE CLICKED", document.getElementById('editP'))
     document.getElementById('editP').style.display= "block"
-  }
-
-  window.onclick = function(event) {
-    if (event.target === document.getElementById('editP')) {
-      console.log("CLICKED")
-      document.getElementById('editP').style.display = "none";
-    }
   }
   const closeModal = () =>{
     console.log("MODAL CLOSED", document.getElementById('editP'));
@@ -81,7 +94,6 @@ function App(){
   });
 
   const onSave = (e) =>{
-    // e.preventDefault();
     alert("Saved");
   }
   const handleChangeProfile = (e)=>{
@@ -90,13 +102,54 @@ function App(){
       [e.target.name] : e.target.value
     }))
   }
+/////////////////////////Tag Fields/////////////////////////////////////////////
+const [tags, setTags] = useState([]);
 
+const saveTag = (e) =>{
+  console.log(e.target.value, e.key); //e.key 내가 지금 치고 있는거 낱개 단위로
+  if(e.key ==="Enter"&&(e.target.value.length>0)){
+    setTags([...tags, e.target.value]);
+    e.target.value='';
+  }
+}
+const deleteTag = (tag2Delete) =>{
+  setTags(tags.filter( (tag) => tag !== tag2Delete));
+}
 
+////////////////////window size getter/////////////////////////////////
+function getWindowDimensions() {
+  const { innerWidth: width} = window;
+  return {
+    width
+  };
+}
+function useWindowDimensions() {
+  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowDimensions(getWindowDimensions());
+    }
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);}, []);
+
+  return windowDimensions;
+}
+/////////////////sideBar when smaller window size/////////////////////////////////////////
+const [showSideBar, setShowSideBar] = useState(false);
+const back2SideBar = () =>{
+  console.log("RETURNED TO SIDEBAR");
+  setShowSideBar(true);
+}
+const screenWidth = useWindowDimensions().width;
+const ifSmallScreen = () =>{
+  const mql = window.matchMedia('(max-width: 500px)');
+  return (screenWidth <= 500);
+}
 
 
   return (
     <React.Fragment>
-      
       <div className="head">
           <meta charSet="utf-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -109,15 +162,22 @@ function App(){
               addNote = { addNote } 
               profileClicked = { profileClicked }
               selectedNote ={ selectedNote }
-              setSelectedNote ={ setSelectedNote }
+              handleSelectedNote ={ handleSelectedNote }
+              ifSmallScreen = {ifSmallScreen()}
                />    
           <Right 
               notes={notes} 
               deleteNote ={ deleteNote } 
-              back2SideBar ={ back2SideBar }
               selectedNote = { getSelectedNote() }
               note2Delete = { getSelectedNote() }
-              onEditNote = {onEditNote}/>
+              onEditNote = {onEditNote}
+              tags={tags}
+              saveTag={saveTag}
+              deleteTag = { deleteTag }
+              back2SideBar ={ back2SideBar }
+              showSideBar = {showSideBar}
+              ifSmallScreen = {ifSmallScreen()}
+              />
               
           <EditProfile 
               closeModal = { closeModal }
@@ -125,7 +185,6 @@ function App(){
               handleChangeProfile = { handleChangeProfile }
               formValues = { formValues }
               />
-          {/* Prop name(내가설정) ={ name of the state that is passed down} */}
       </div>
 
     </React.Fragment>

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-function TopRight({ deleteNote,  back2SideBar, note, note2Delete}){
+function TopRight({ deleteNote,  back2SideBar,  note2Delete}){
+
+
 
     return(
             <div className="topR">  
@@ -12,3 +14,4 @@ function TopRight({ deleteNote,  back2SideBar, note, note2Delete}){
 }
 
 export default TopRight;
+//back2Sidebar = handleShowSidebar
