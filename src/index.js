@@ -6,6 +6,11 @@ import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
+      <div className="head">
+          <meta charSet="utf-8" />
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+          <link href="https://fonts.googleapis.com/icon?family=Material+Icons"  rel="stylesheet"/>
+      </div>
     <App />
   </React.StrictMode>,
   document.getElementById('root')

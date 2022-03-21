@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Tags from './tag';
-function BottomRight( {selectedNote , onEditNote} ){
+function BottomRight( {selectedNote , onEditNote, tags, saveTag, deleteTag} ){
     const txtStyle={
             height: "690px",
             width: "100%",
@@ -23,8 +23,7 @@ function BottomRight( {selectedNote , onEditNote} ){
     }
 
     if(!selectedNote) {
-        return <textarea disabled={true} style={txtStyle}>
-                NO notes selected
+        return <textarea disabled={true} style={txtStyle} value={"NO notes selected"}>
                 </textarea>
     }
 
@@ -35,6 +34,10 @@ function BottomRight( {selectedNote , onEditNote} ){
                     onChange={ (event) => handleChange( event.target.value)}
                     style={{fontFamily: 'Helvetica, Arial'}}>
             </textarea>
+            <Tags  tags={tags} 
+                    saveTag={saveTag}
+                    deleteTag = { deleteTag }
+                    selectedNote = { selectedNote }  />
             
         </div>
     );

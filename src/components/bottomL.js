@@ -22,6 +22,7 @@ function BottomLeft({ notes, selectedNote, handleSelectedNote }){
                                                         minute: "2-digit",
                                                         second: "2-digit"})
                                         } 
+                                tags = {note.tags}
                                 selectedNote ={ selectedNote }
                                 handleSelectedNote ={ handleSelectedNote }/>)}  
                     </div>

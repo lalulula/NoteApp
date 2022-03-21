@@ -17,12 +17,10 @@ function Right({ notes , deleteNote, selectedNote,  back2SideBar, note2Delete, o
                     note2Delete = {note2Delete}/>
             <BottomRight 
                     selectedNote = { selectedNote } 
-                    onEditNote = { onEditNote }/>
-            <Tags 
-                    tags={tags} 
-                    saveTag={saveTag}
-                    deleteTag = { deleteTag }
-                    selectedNote = { selectedNote }  />
+                    onEditNote = { onEditNote }
+                    tags = {tags}
+                    saveTag = {saveTag}
+                    deleteTag ={deleteTag} />
         </div>
     );
 };

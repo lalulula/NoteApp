@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import profileImg from './profileImg.jpg'
 
 
-function EditProfile({ closeModal, onSave, handleChangeProfile, formValues}){
+function EditProfile({ closeModal, onSave, handleChangeProfile, formValues, handleThemeChange, theme}){
     return(
             <div id="editP" className="modal">
                 <div className="modal-content">
@@ -24,7 +24,7 @@ function EditProfile({ closeModal, onSave, handleChangeProfile, formValues}){
                             Email<br/> <input type="text" id="pEmail" size="30" name="pEmail" value={formValues.pEmail}
                                                 onChange={handleChangeProfile}/><br/>
                             Color Scheme<br/>
-                            <select id="theme">
+                            <select class ="select" onChange={handleThemeChange} value = {theme}>
                                 <option value="Light">Light</option>
                                 <option value="Dark">Dark</option>
                             </select>

@@ -7,14 +7,18 @@ import EditProfile from './components/editProfile'
 import{ nanoid } from 'nanoid';
 
 function App(){
-  const initalNoteArray=[ { id: nanoid(),
+
+  const initalNoteArray=[ { 
+    id: nanoid(),
     text:"CSE316",
-    date: Date.now()
+    date: Date.now(),
+    tags:[]
   },
 
   { id: nanoid(),
     text:"This is a note with a long line of text. Notice that the text will automatically wrap to the next line once it reaches the right side of the screen.",
-    date: Date.now()
+    date: Date.now(),
+    tags:[]
   } ]
 
   const [notes, setNotes] = useState(JSON.parse(localStorage.myNotes) || initalNoteArray) //use local Storage 
@@ -28,7 +32,8 @@ function App(){
     const newNote = {
       id: nanoid(),
       text:"New Note",
-      date: Date.now()
+      date: Date.now(),
+      tags:[]
     };
     setNotes([newNote, ...notes]);
   }
@@ -71,6 +76,19 @@ function App(){
     });
     setNotes(updatedNotesArray);
   }
+  /////////////////////////Tag Fields/////////////////////////////////////////////
+  const [tags, setTags] = useState([]);
+
+  const saveTag = (e) =>{
+    console.log(e.target.value, e.key); //e.key 내가 지금 치고 있는거 낱개 단위로
+    if(e.key ==="Enter"&&(e.target.value.length>0)){
+      setTags([...tags, e.target.value]);
+      e.target.value='';
+    }
+  }
+  const deleteTag = (tag2Delete) =>{
+    setTags(tags.filter( (tag) => tag !== tag2Delete));
+  }
 ////////////////////////profile/////////////////////////////////////////
 window.onclick = function(event) {
   if (event.target === document.getElementById('editP')) {
@@ -86,36 +104,40 @@ window.onclick = function(event) {
     console.log("MODAL CLOSED", document.getElementById('editP'));
     document.getElementById('editP').style.display= "none";
   }
-
+////////////////////////profile to LS/////////////////////////////////////////
   const[formValues, updateFormValues] = useState(JSON.parse(localStorage.profileInfo) || [])
 
   useEffect( ()=>{
     localStorage.setItem("profileInfo", JSON.stringify(formValues), [formValues])
-  });
+  
+    });
 
-  const onSave = (e) =>{
-    alert("Saved");
-  }
   const handleChangeProfile = (e)=>{
     updateFormValues((prevValues)=>({
       ...prevValues,
       [e.target.name] : e.target.value
     }))
-  }
-/////////////////////////Tag Fields/////////////////////////////////////////////
-const [tags, setTags] = useState([]);
 
-const saveTag = (e) =>{
-  console.log(e.target.value, e.key); //e.key 내가 지금 치고 있는거 낱개 단위로
-  if(e.key ==="Enter"&&(e.target.value.length>0)){
-    setTags([...tags, e.target.value]);
-    e.target.value='';
   }
-}
-const deleteTag = (tag2Delete) =>{
-  setTags(tags.filter( (tag) => tag !== tag2Delete));
+  const[theme, updateTheme]=useState(JSON.parse(localStorage.themes) )
+
+  useEffect(()=>{
+    localStorage.setItem("themes", JSON.stringify(theme), theme)
+  })
+
+const handleThemeChange = ()=>{
+    console.log("Changing theme");
+    const select = document.querySelector(".select");
+    const currentValue = select.options[select.selectedIndex].value;
+    console.log(currentValue)
+    updateTheme(currentValue);
+
 }
 
+  const onSave = (e) =>{
+    alert("Saved");
+    closeModal();
+  }
 ////////////////////window size getter/////////////////////////////////
 function getWindowDimensions() {
   const { innerWidth: width} = window;
@@ -143,19 +165,12 @@ const back2SideBar = () =>{
 }
 const screenWidth = useWindowDimensions().width;
 const ifSmallScreen = () =>{
-  const mql = window.matchMedia('(max-width: 500px)');
   return (screenWidth <= 500);
 }
 
 
   return (
     <React.Fragment>
-      <div className="head">
-          <meta charSet="utf-8" />
-          <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <link href="https://fonts.googleapis.com/icon?family=Material+Icons"  rel="stylesheet"/>
-      </div>
-
       <div id="container">  
           <Left 
               notes={notes} 
@@ -184,6 +199,8 @@ const ifSmallScreen = () =>{
               onSave = {onSave}
               handleChangeProfile = { handleChangeProfile }
               formValues = { formValues }
+              handleThemeChange = {handleThemeChange}
+              theme ={theme}
               />
       </div>
 
