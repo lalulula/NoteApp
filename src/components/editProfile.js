@@ -24,7 +24,7 @@ function EditProfile({ closeModal, onSave, handleChangeProfile, formValues, hand
                             Email<br/> <input type="text" id="pEmail" size="30" name="pEmail" value={formValues.pEmail}
                                                 onChange={handleChangeProfile}/><br/>
                             Color Scheme<br/>
-                            <select class ="select" onChange={handleThemeChange} value = {theme}>
+                            <select className ="select" onChange={handleThemeChange} value = {theme}>
                                 <option value="Light">Light</option>
                                 <option value="Dark">Dark</option>
                             </select>

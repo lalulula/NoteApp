@@ -12,17 +12,18 @@ function App(){
     id: nanoid(),
     text:"CSE316",
     date: Date.now(),
-    tags:[]
+    tags:['Hello']
   },
 
   { id: nanoid(),
     text:"This is a note with a long line of text. Notice that the text will automatically wrap to the next line once it reaches the right side of the screen.",
     date: Date.now(),
-    tags:[]
+    tags:['HI','My','Name','is','Yunah']
   } ]
 
-  const [notes, setNotes] = useState(JSON.parse(localStorage.myNotes) || initalNoteArray) //use local Storage 
-  const[selectedNote, setSelectedNote] = useState('');
+  const [notes, setNotes] = useState(localStorage.myNotes? JSON.parse(localStorage.myNotes) : initalNoteArray) //use local Storage 
+  const[selectedNoteId, setSelectedNoteId] = useState('');
+
 
   useEffect( ()=>{
     localStorage.setItem("myNotes", JSON.stringify(notes))}, [notes] );
@@ -39,55 +40,42 @@ function App(){
   }
 
   const handleSelectedNote=(id) =>{ //clicking on a note in the list
-    setSelectedNote(id);
+    setSelectedNoteId(id);
     setShowSideBar(false);
   }
 
   const deleteNote = (e) => {
-    const index2Delete = notes.indexOf(notes.find((note) => note.id === selectedNote));
+    const index2Delete = notes.indexOf(notes.find((note) => note.id === selectedNoteId));
     // setNotes(notes.filter((note) => note.id !== e))
-    if(index2Delete == 0){
+    if(index2Delete === 0){
       setNotes(notes.filter((note) => note.id !== e))
       console.log(notes)
-      setSelectedNote(notes[0].id)
+      setSelectedNoteId(notes[0].id)
     }
-    else if(index2Delete == notes.length-1){
+    else if(index2Delete === notes.length-1){
       setNotes(notes.filter((note) => note.id !== e))
-      setSelectedNote(notes[notes.length-1].id)
+      setSelectedNoteId(notes[notes.length-1].id)
     }
     else{
       const newDisplayedNote = index2Delete;
       setNotes(notes.filter((note) => note.id !== e))
-      setSelectedNote(notes[newDisplayedNote ].id)
+      setSelectedNoteId(notes[newDisplayedNote ].id)
     }
   }
 
 
   const getSelectedNote=()=>{
-    return notes.find((note) => note.id === selectedNote);
+    return notes.find((note) => note.id === selectedNoteId);
 
   }
   const onEditNote = (updatedNote) => {
     const updatedNotesArray = notes.map((note)=>{
-      if(note.id === selectedNote){
+      if(note.id === selectedNoteId){
         return updatedNote;
       }
       return note;
     });
     setNotes(updatedNotesArray);
-  }
-  /////////////////////////Tag Fields/////////////////////////////////////////////
-  const [tags, setTags] = useState([]);
-
-  const saveTag = (e) =>{
-    console.log(e.target.value, e.key); //e.key 내가 지금 치고 있는거 낱개 단위로
-    if(e.key ==="Enter"&&(e.target.value.length>0)){
-      setTags([...tags, e.target.value]);
-      e.target.value='';
-    }
-  }
-  const deleteTag = (tag2Delete) =>{
-    setTags(tags.filter( (tag) => tag !== tag2Delete));
   }
 ////////////////////////profile/////////////////////////////////////////
 window.onclick = function(event) {
@@ -105,7 +93,7 @@ window.onclick = function(event) {
     document.getElementById('editP').style.display= "none";
   }
 ////////////////////////profile to LS/////////////////////////////////////////
-  const[formValues, updateFormValues] = useState(JSON.parse(localStorage.profileInfo) || [])
+  const[formValues, updateFormValues] = useState(localStorage.profileInfo? JSON.parse(localStorage.profileInfo) : [])
 
   useEffect( ()=>{
     localStorage.setItem("profileInfo", JSON.stringify(formValues), [formValues])
@@ -119,7 +107,7 @@ window.onclick = function(event) {
     }))
 
   }
-  const[theme, updateTheme]=useState(JSON.parse(localStorage.themes) )
+  const[theme, updateTheme]=useState(localStorage.themes? JSON.parse(localStorage.themes): '' )
 
   useEffect(()=>{
     localStorage.setItem("themes", JSON.stringify(theme), theme)
@@ -176,7 +164,7 @@ const ifSmallScreen = () =>{
               notes={notes} 
               addNote = { addNote } 
               profileClicked = { profileClicked }
-              selectedNote ={ selectedNote }
+              selectedNoteId ={ selectedNoteId }
               handleSelectedNote ={ handleSelectedNote }
               ifSmallScreen = {ifSmallScreen()}
                />    
@@ -186,9 +174,6 @@ const ifSmallScreen = () =>{
               selectedNote = { getSelectedNote() }
               note2Delete = { getSelectedNote() }
               onEditNote = {onEditNote}
-              tags={tags}
-              saveTag={saveTag}
-              deleteTag = { deleteTag }
               back2SideBar ={ back2SideBar }
               showSideBar = {showSideBar}
               ifSmallScreen = {ifSmallScreen()}

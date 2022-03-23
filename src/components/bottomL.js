@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import profileImg from './profileImg.jpg'
 import Note from './note';
-function BottomLeft({ notes, selectedNote, handleSelectedNote }){
+function BottomLeft({ notes, selectedNoteId, handleSelectedNote }){
 
         return(
             <div className="bottomL">
@@ -22,8 +22,7 @@ function BottomLeft({ notes, selectedNote, handleSelectedNote }){
                                                         minute: "2-digit",
                                                         second: "2-digit"})
                                         } 
-                                tags = {note.tags}
-                                selectedNote ={ selectedNote }
+                                selectedNoteId ={ selectedNoteId }
                                 handleSelectedNote ={ handleSelectedNote }/>)}  
                     </div>
                 </div>

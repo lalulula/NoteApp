@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import TopRight from './topR'
 import BottomRight from './bottomR'
-import Tags from './tag';
 
-function Right({ notes , deleteNote, selectedNote,  back2SideBar, note2Delete, onEditNote, tags, saveTag, deleteTag, ifSmallScreen, showSideBar }){
+function Right({ notes , deleteNote, selectedNote,  back2SideBar, note2Delete, onEditNote, ifSmallScreen, showSideBar}){
 
     return(
         <div className="right" 
@@ -16,11 +15,11 @@ function Right({ notes , deleteNote, selectedNote,  back2SideBar, note2Delete, o
                     back2SideBar={ back2SideBar }
                     note2Delete = {note2Delete}/>
             <BottomRight 
+                    notes = {notes}   
                     selectedNote = { selectedNote } 
                     onEditNote = { onEditNote }
-                    tags = {tags}
-                    saveTag = {saveTag}
-                    deleteTag ={deleteTag} />
+                    tags = {selectedNote ? selectedNote.tags: [] }
+                    />
         </div>
     );
 };

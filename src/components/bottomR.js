@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Tags from './tag';
-function BottomRight( {selectedNote , onEditNote, tags, saveTag, deleteTag} ){
+function BottomRight( {notes, selectedNote , onEditNote, tags, handleDrag}){
     const txtStyle={
             height: "690px",
             width: "100%",
@@ -18,7 +18,8 @@ function BottomRight( {selectedNote , onEditNote, tags, saveTag, deleteTag} ){
         onEditNote({
             id: selectedNote.id,
             text: value, 
-            date: Date.now()
+            date: Date.now(),
+            tags: tags
         });
     }
 
@@ -34,10 +35,17 @@ function BottomRight( {selectedNote , onEditNote, tags, saveTag, deleteTag} ){
                     onChange={ (event) => handleChange( event.target.value)}
                     style={{fontFamily: 'Helvetica, Arial'}}>
             </textarea>
-            <Tags  tags={tags} 
-                    saveTag={saveTag}
-                    deleteTag = { deleteTag }
-                    selectedNote = { selectedNote }  />
+            <div>
+                
+                <Tags  
+                    handleDrag={handleDrag}
+                    notes = {notes}
+                    tags={tags} 
+                    selectedNote = { selectedNote } 
+                    onEditNote ={onEditNote}
+                     />
+            </div>
+
             
         </div>
     );
