@@ -26,7 +26,7 @@ body {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  width: var(--sidebar-width); /* width: 240px; */
+  width: var(--sidebar-width);
   border-right: 2px solid darkgray;
 }
 
@@ -53,7 +53,7 @@ body {
   display: flex;
   flex-direction: column;
   overflow: auto;
-  width: var(--sidebar-width); /* width: 240px; */
+  width: var(--sidebar-width);
   border: 2px solid darkgray;
   background: #eeeeee;
   border-radius: 7px;
@@ -135,14 +135,15 @@ textarea {
   resize: none;
   font-size: large;
   overflow: visible;
-  padding: 20px 10px 10px 10px;
+  padding-top: 20px;
+  padding-left: 10px;
   background-color: none;
 }
 textarea:focus,
 input:focus {
   outline: none;
 }
-/* 여기부터 태그 디자인 */
+/* TAGS */
 .tagContainer {
   font-family: Helvetica, Arial;
   display: flex;
@@ -153,41 +154,53 @@ input:focus {
   overflow: hidden;
   bottom: 0px;
   height: auto;
-  width: 100%;
-  margin: 2px;
-  padding: 5px;
+  width: auto;
   border: 5px solid transparent;
 }
-.tag {
-  font-size: 15px;
-  border: 2px solid rgb(148, 144, 144);
-  margin: 3px;
-  padding: 2px;
-  border-radius: 5px;
+
+.tagContainer .ReactTags__selected {
+  width: inherit;
+  height: inherit;
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 }
-.tagContainer input {
-  width: auto;
+.tagContainer .ReactTags__tagInputField {
+  background-color: white;
+  width: inherit;
+  height: inherit;
   font-size: 15px;
-  border: 2px solid rgb(247, 247, 247);
-  margin: 0 2.5px 0 2.5px;
-  padding: 2px;
+  border: 2px solid rgb(235, 234, 234);
+  margin: 3px 2.5px 3px 2.5px;
+  padding: 5px 0 5px 0;
   border-radius: 5px;
   display: flex;
-  /* flex: 1; */
   align-items: center;
   outline: none;
+  /* position: relative; */
 }
-.tagContainer span {
+.tagContainer .ReactTags__remove {
+  border: 2px solid rgb(105, 101, 101);
+  background-color: rgb(235, 235, 235);
   font-size: 10px;
-  margin: 0 2.5px 0 2.5px;
-  padding: 2px;
-  border-radius: 5px;
+  margin: 0 3px 0 7px;
+  padding: 3px 5px 3px 5px;
+  border-radius: 3px;
   display: flex;
   align-items: center;
   cursor: pointer;
 }
+.tagContainer span {
+  font-size: 15px;
+  background-color: rgb(235, 235, 235);
+  border: 2px solid rgb(209, 208, 208);
+  margin: 3px 5px 3px 3px;
+  padding: 3px 2px 3px 2px;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+}
+/* //////////////////////////////// */
 
 img {
   width: 30px;
@@ -197,11 +210,7 @@ img {
   margin-top: 10px;
   margin-bottom: 11px;
 }
-/* .no-active-note {
-  text-align: center;
-  border-left: 2px solid darkgray;
-  height: 100%;
-} */
+/* /////////////////////////////////// */
 /* ///////////////////////////////Profile//////////////////////////////////////// */
 .editContainer {
   padding: 10px;

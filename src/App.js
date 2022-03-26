@@ -1,6 +1,6 @@
 // import logo from './logo.svg';
 import './App.css';
-import React, { Component, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Left from './components/left'
 import Right from './components/right'
 import EditProfile from './components/editProfile'
@@ -8,18 +8,29 @@ import{ nanoid } from 'nanoid';
 
 function App(){
 
-  const initalNoteArray=[ { 
-    id: nanoid(),
+  const initalNoteArray=[ 
+  { id: nanoid(),
     text:"CSE316",
     date: Date.now(),
-    tags:['Hello']
+    tags:[]
+    // tags:[{id: "Hello", t: 'Hello'}]
+    // tags:['Hello'] //If I don't add a id value, the program would break when I add a tag
   },
 
   { id: nanoid(),
     text:"This is a note with a long line of text. Notice that the text will automatically wrap to the next line once it reaches the right side of the screen.",
     date: Date.now(),
-    tags:['HI','My','Name','is','Yunah']
-  } ]
+    tags: []
+    // tags:[{id: 'Hi', t:'Hi'}, {id: 'My', t:'My'}, {id: 'Name', t:'Name'}, {id: 'is', t:'is'}, {id:'Yunah', t:'Yunah'}]
+    // tags:['HI','My','Name','is','Yunah']
+  },
+  
+  { id: nanoid(),
+    text:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sit amet felis condimentum, cursus urna ut, mollis urna. Integer convallis lorem lorem. Quisque eget libero sed nunc gravida tristique. Vivamus nec vestibulum nunc. Integer molestie purus ac dolor viverra, non venenatis sem tempus. Aliquam sit amet eleifend lorem. Maecenas id condimentum purus. Phasellus et mauris felis. Ut suscipit metus tempor tempor malesuada. Nunc laoreet justo auctor, elementum elit vel, vehicula massa. Praesent a neque eget est sollicitudin blandit non ac lacus. Morbi vitae dictum neque. Vivamus dolor est, imperdiet et leo in, iaculis consectetur massa.Nunc laoreet metus a augue dignissim, id fringilla turpis blandit. Cras luctus, quam et dignissim viverra, magna libero aliquam ipsum, at finibus libero leo et magna. Nullam volutpat, diam in consequat gravida, velit elit dapibus magna, ut tincidunt nunc tellus nec ante. Sed lorem ante, pharetra et faucibus sodales, tristique id mi. Nullam at massa egestas, iaculis magna molestie, dapibus lectus. Nullam eu turpis massa. Mauris tempor fringilla turpis semper consequat. Sed porta sem dolor, in venenatis leo consequat vel. Nullam et ullamcorper nisi.",
+    date: Date.now(),
+    tags: []
+  }
+ ]
 
   const [notes, setNotes] = useState(localStorage.myNotes? JSON.parse(localStorage.myNotes) : initalNoteArray) //use local Storage 
   const[selectedNoteId, setSelectedNoteId] = useState('');
@@ -46,20 +57,30 @@ function App(){
 
   const deleteNote = (e) => {
     const index2Delete = notes.indexOf(notes.find((note) => note.id === selectedNoteId));
-    // setNotes(notes.filter((note) => note.id !== e))
-    if(index2Delete === 0){
-      setNotes(notes.filter((note) => note.id !== e))
-      console.log(notes)
-      setSelectedNoteId(notes[0].id)
+    if(index2Delete === 0){ 
+      if(notes.length===1){
+        console.log("CASE1");
+        setNotes(notes.filter((note) => note.id !== e));
+      }
+      else{
+        console.log("CASE1");
+        setNotes(notes.filter((note) => note.id !== e));
+        const newArray = notes.filter((note) => note.id !== e);
+        setSelectedNoteId(newArray[0].id);
+      }
     }
     else if(index2Delete === notes.length-1){
-      setNotes(notes.filter((note) => note.id !== e))
-      setSelectedNoteId(notes[notes.length-1].id)
+      console.log("CASE2");
+      setNotes(notes.filter((note) => note.id !== e));
+      const newArray = notes.filter((note) => note.id !== e);
+      setSelectedNoteId(newArray[newArray.length-1].id);
     }
     else{
+      console.log("CASE3");
       const newDisplayedNote = index2Delete;
-      setNotes(notes.filter((note) => note.id !== e))
-      setSelectedNoteId(notes[newDisplayedNote ].id)
+      setNotes(notes.filter((note) => note.id !== e));
+      const newArray = notes.filter((note) => note.id !== e);
+      setSelectedNoteId(newArray[newDisplayedNote].id);
     }
   }
 
@@ -77,6 +98,7 @@ function App(){
     });
     setNotes(updatedNotesArray);
   }
+
 ////////////////////////profile/////////////////////////////////////////
 window.onclick = function(event) {
   if (event.target === document.getElementById('editP')) {

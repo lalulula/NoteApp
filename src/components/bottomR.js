@@ -35,8 +35,6 @@ function BottomRight( {notes, selectedNote , onEditNote, tags, handleDrag}){
                     onChange={ (event) => handleChange( event.target.value)}
                     style={{fontFamily: 'Helvetica, Arial'}}>
             </textarea>
-            <div>
-                
                 <Tags  
                     handleDrag={handleDrag}
                     notes = {notes}
@@ -44,9 +42,6 @@ function BottomRight( {notes, selectedNote , onEditNote, tags, handleDrag}){
                     selectedNote = { selectedNote } 
                     onEditNote ={onEditNote}
                      />
-            </div>
-
-            
         </div>
     );
 }
