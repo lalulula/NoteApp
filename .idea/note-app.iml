@@ -8,5 +8,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="basic-react-demo" />
+    <orderEntry type="module" module-name="HW1 Initial" />
+    <orderEntry type="module" module-name="Node + Express Demo" />
   </component>
 </module>

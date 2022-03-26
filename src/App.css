@@ -107,11 +107,11 @@ body {
 }
 .bottomR {
   flex: 1;
+  padding-right: 10px;
   /* height: 100%; */
 }
 
-button,
-input[type="submit"] {
+button {
   cursor: pointer;
   border: none;
   background-color: var(--background-color);
@@ -129,14 +129,13 @@ button :hover {
 }
 textarea {
   height: 690px;
-  /* height: 100%; */
+  /* height: 100%;  */
   width: 100%;
   border: none;
   resize: none;
   font-size: large;
   overflow: visible;
-  padding-top: 20px;
-  padding-left: 10px;
+  padding: 20px 0 0 10px;
   background-color: none;
 }
 textarea:focus,
@@ -145,16 +144,16 @@ input:focus {
 }
 /* TAGS */
 .tagContainer {
-  font-family: Helvetica, Arial;
+  height: auto;
+  width: 100%;
+  overflow: hidden;
   display: flex;
   flex-wrap: wrap;
-  background-color: rgb(235, 235, 235);
-  border: none;
-  position: fixed;
-  overflow: hidden;
+  /* position: fixed; */
+  position: sticky;
   bottom: 0px;
-  height: auto;
-  width: auto;
+  font-family: Helvetica, Arial;
+  background-color: rgb(235, 235, 235);
   border: 5px solid transparent;
 }
 
