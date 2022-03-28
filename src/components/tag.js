@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { WithContext as ReactTags } from 'react-tag-input';
            
 function Tags({tags, selectedNote, onEditNote}){
@@ -20,7 +20,6 @@ function Tags({tags, selectedNote, onEditNote}){
     }
 
     const handleAddition = (tag) =>{
-        console.log(tag)
             onEditNote({
                 id: selectedNote.id,
                 text: selectedNote.text,

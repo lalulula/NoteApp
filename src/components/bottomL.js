@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import profileImg from './profileImg.jpg'
+import React from 'react';
 import Note from './note';
 function BottomLeft({ notes, selectedNoteId, handleSelectedNote }){
 

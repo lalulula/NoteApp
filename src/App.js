@@ -1,4 +1,3 @@
-// import logo from './logo.svg';
 import './App.css';
 import React, { useEffect, useState } from 'react';
 import Left from './components/left'
@@ -13,16 +12,12 @@ function App(){
     text:"CSE316",
     date: Date.now(),
     tags:[]
-    // tags:[{id: "Hello", t: 'Hello'}]
-    // tags:['Hello'] //If I don't add a id value, the program would break when I add a tag
   },
 
   { id: nanoid(),
     text:"This is a note with a long line of text. Notice that the text will automatically wrap to the next line once it reaches the right side of the screen.",
     date: Date.now(),
-    tags: []
-    // tags:[{id: 'Hi', t:'Hi'}, {id: 'My', t:'My'}, {id: 'Name', t:'Name'}, {id: 'is', t:'is'}, {id:'Yunah', t:'Yunah'}]
-    // tags:['HI','My','Name','is','Yunah']
+    tags:[{id: 'Hi', text:'Hi'}, {id: 'My', text:'My'}, {id: 'Name', text:'Name'}, {id: 'is', text:'is'}, {id:'Yunah', text:'Yunah'}]
   },
   
   { id: nanoid(),
@@ -143,7 +138,6 @@ const handleThemeChange = ()=>{
     updateTheme(currentValue);
 
 }
-
   const onSave = (e) =>{
     alert("Saved");
     closeModal();
@@ -170,7 +164,6 @@ function useWindowDimensions() {
 /////////////////sideBar when smaller window size/////////////////////////////////////////
 const [showSideBar, setShowSideBar] = useState(false);
 const back2SideBar = () =>{
-  console.log("RETURNED TO SIDEBAR");
   setShowSideBar(true);
 }
 const screenWidth = useWindowDimensions().width;

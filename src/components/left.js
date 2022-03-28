@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React  from 'react';
 
 import TopLeft from './topL'
 import BottomLeft from './bottomL'

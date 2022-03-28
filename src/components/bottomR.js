@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Tags from './tag';
 function BottomRight( {notes, selectedNote , onEditNote, tags, handleDrag}){
     const txtStyle={
@@ -47,4 +47,3 @@ function BottomRight( {notes, selectedNote , onEditNote, tags, handleDrag}){
 }
  
 export default BottomRight;
-// disabled={true}

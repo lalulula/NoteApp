@@ -9,7 +9,7 @@
   --action-color: rgb(58, 99, 197);
   --border-color: darkgray;
 }
-
+/*///////////////Main Screen////////////////////// */
 body {
   background-color: var(--background-color);
   margin: 0;
@@ -20,6 +20,7 @@ body {
 }
 #container {
   display: flex;
+  height: 100%;
   /* height: 100vh; */
 }
 .left {
@@ -27,7 +28,7 @@ body {
   display: flex;
   flex-direction: column;
   width: var(--sidebar-width);
-  border-right: 2px solid darkgray;
+  border-left: 2px solid darkgray;
 }
 
 .topL {
@@ -97,6 +98,8 @@ body {
   display: flex;
   flex-direction: column;
   flex: 1;
+  border-left: 2px solid darkgray;
+  border-right: 2px solid darkgray;
 }
 .topR {
   display: flex;
@@ -128,13 +131,12 @@ button :hover {
   display: none;
 }
 textarea {
-  height: 690px;
-  /* height: 100%;  */
+  height: 600px;
   width: 100%;
   border: none;
   resize: none;
   font-size: large;
-  overflow: visible;
+  overflow: auto;
   padding: 20px 0 0 10px;
   background-color: none;
 }
@@ -142,13 +144,21 @@ textarea:focus,
 input:focus {
   outline: none;
 }
-/* TAGS */
+img {
+  width: 30px;
+  border-radius: 50%;
+}
+.topL .myNotes {
+  margin-top: 10px;
+  margin-bottom: 11px;
+}
+
+/*///////////////////////////// TAGS ///////////////////////////*/
 .tagContainer {
   height: auto;
   width: 100%;
   overflow: hidden;
   display: flex;
-  flex-wrap: wrap;
   /* position: fixed; */
   position: sticky;
   bottom: 0px;
@@ -176,7 +186,6 @@ input:focus {
   display: flex;
   align-items: center;
   outline: none;
-  /* position: relative; */
 }
 .tagContainer .ReactTags__remove {
   border: 2px solid rgb(105, 101, 101);
@@ -199,24 +208,14 @@ input:focus {
   display: flex;
   align-items: center;
 }
-/* //////////////////////////////// */
 
-img {
-  width: 30px;
-  border-radius: 50%;
-}
-.topL .myNotes {
-  margin-top: 10px;
-  margin-bottom: 11px;
-}
-/* /////////////////////////////////// */
 /* ///////////////////////////////Profile//////////////////////////////////////// */
 .editContainer {
-  padding: 10px;
+  padding: 5px 10px 30px 10px;
   align-items: center;
 }
+/*팝업전체*/
 .modal {
-  /*팝업전체*/
   display: none;
   position: fixed;
   z-index: 1;
@@ -242,17 +241,22 @@ img {
   display: flex;
   justify-content: space-between;
 }
-.p1,
+.p1 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 10px;
+}
+.p2 {
+  margin: 20px 0 30px 0;
+}
+
 .p3 {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-}
-.p2 {
-  display: flex;
-  flex-direction: column;
-  margin: 20px 0 30px 0;
 }
 .save {
   background-size: 20px;
@@ -261,6 +265,21 @@ img {
   color: white;
   border: none;
   padding: 15px 32px;
+}
+#editP img {
+  width: 40px;
+  margin-left: 10px;
+  border-radius: 50%;
+}
+
+#editP input {
+  width: -webkit-fill-available;
+  height: 25px;
+  margin-bottom: 5px;
+}
+#editP select {
+  width: -webkit-fill-available;
+  height: 30px;
 }
 
 /* These rules only apply if the window's max-width is 500px or less */
@@ -280,9 +299,11 @@ img {
   #back {
     display: inline;
   }
+  .left {
+    border-right: 2px solid darkgray;
+  }
 
   .modal {
-    /*팝업전체*/
     display: none;
     position: fixed;
     z-index: 1;
@@ -295,7 +316,6 @@ img {
     background-color: rgba(256, 256, 256, 1);
   }
   .modal-content {
-    /* 모달안에있는내용 */
     background-color: white;
     display: contents;
   }

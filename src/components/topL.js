@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import profileImg from './profileImg.jpg'
 
 function TopLeft({addNote ,  profileClicked }){
@@ -16,5 +16,3 @@ function TopLeft({addNote ,  profileClicked }){
 
  
 export default TopLeft;
-
-// "document.getElementById('editP').style.display ='block'"

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 function TopRight({ deleteNote,  back2SideBar,  note2Delete}){
 
 
@@ -14,4 +14,3 @@ function TopRight({ deleteNote,  back2SideBar,  note2Delete}){
 }
 
 export default TopRight;
-//back2Sidebar = handleShowSidebar
