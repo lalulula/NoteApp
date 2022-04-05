@@ -2,7 +2,7 @@ import React from 'react';
 import Tags from './tag';
 function BottomRight( {notes, selectedNote , onEditNote, tags, handleDrag}){
     const txtStyle={
-            height: "690px",
+            height: "100%",
             width: "100%",
             border: "none",
             resize: "none",

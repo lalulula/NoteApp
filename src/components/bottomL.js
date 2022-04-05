@@ -1,17 +1,20 @@
 import React from 'react';
 import Note from './note';
-function BottomLeft({ notes, selectedNoteId, handleSelectedNote }){
+import Search from './search';
+function BottomLeft({ notes, selectedNoteId, handleSelectedNote, handleSearchText, setSelectedNoteId}){
+
+    const sortedNotes = notes.sort((a , b)=> b.date - a.date);
 
         return(
             <div className="bottomL">
-                    <div className= "search">
-                        <span className="material-icons">search</span>
-                        <input type="text" name="search" placeholder="Search all notes"
-                                  style={{border: 'none', marginTop: '10px', marginBottom: '10px'}} />
-                    </div>
+                    <Search 
+                        handleSearchText={handleSearchText}
+                        setSelectedNoteId={setSelectedNoteId}
+                        notes={notes}
+                            />
 
                      <div id="note_list">  
-                        {notes.map( (note) => 
+                        {sortedNotes.map( (note) => 
                             <Note 
                                 key={note.id} 
                                 id={note.id} 

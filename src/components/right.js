@@ -8,7 +8,8 @@ function Right({ notes , deleteNote, selectedNote,  back2SideBar, note2Delete, o
         <div className="right" 
             style={ifSmallScreen? 
                     {display: showSideBar? 'none': 'block'}: 
-                    {display:'block'}}>
+                    {display:'block'}}
+                    >
             <TopRight 
                     notes={ notes }
                     deleteNote={ deleteNote }

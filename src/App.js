@@ -1,3 +1,26 @@
+// const express = require('express');
+// const mongoose = require('mongoose'); //Connecting to MongoDB
+// const Note = require('./models/note');
+// const User = require('./models/user');
+// const Tag = require('./models/tag');
+
+
+// const app = express();
+// const bodyParser = require('body-parser');
+// app.use(bodyParser.json());
+
+// //Set up mongoose connection BASIC SETUP CODE
+// var mongoDB = 'mongodb://localhost:27017/Note-App'; //database URL here
+// mongoose.connect(mongoDB, { useNewUrlParser: true , useUnifiedTopology: true});
+// var db = mongoose.connection;//get default connection
+// //Bind connection to error event
+// db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
+
+
+// port = process.env.PORT || 3000;
+// app.listen(port, () => { console.log('server started!')});
+
 import './App.css';
 import React, { useEffect, useState } from 'react';
 import Left from './components/left'
@@ -30,12 +53,13 @@ function App(){
   const [notes, setNotes] = useState(localStorage.myNotes? JSON.parse(localStorage.myNotes) : initalNoteArray) //use local Storage 
   const[selectedNoteId, setSelectedNoteId] = useState('');
 
-
   useEffect( ()=>{
     localStorage.setItem("myNotes", JSON.stringify(notes))}, [notes] );
 
   const addNote = () => {
-    console.log("ADDED")
+    setSearchText('');
+    document.getElementById('searchBar').value='';
+    document.getElementById('clearSearchBtn').style.color='transparent';
     const newNote = {
       id: nanoid(),
       text:"New Note",
@@ -43,6 +67,7 @@ function App(){
       tags:[]
     };
     setNotes([newNote, ...notes]);
+    setSelectedNoteId(newNote.id);
   }
 
   const handleSelectedNote=(id) =>{ //clicking on a note in the list
@@ -166,23 +191,26 @@ const [showSideBar, setShowSideBar] = useState(false);
 const back2SideBar = () =>{
   setShowSideBar(true);
 }
-const screenWidth = useWindowDimensions().width;
-const ifSmallScreen = () =>{
-  return (screenWidth <= 500);
-}
+const screenDimension = useWindowDimensions();
 
+/////////////////////SEARCH///////////////////////////////////////
+const[searchText, setSearchText] = useState('');
 
   return (
     <React.Fragment>
       <div id="container">  
           <Left 
-              notes={notes} 
+              notes={notes.filter((note)=>note.text.includes(searchText))} 
               addNote = { addNote } 
               profileClicked = { profileClicked }
               selectedNoteId ={ selectedNoteId }
               handleSelectedNote ={ handleSelectedNote }
-              ifSmallScreen = {ifSmallScreen()}
-               />    
+              handleSearchText ={setSearchText}
+              setSelectedNoteId={setSelectedNoteId}
+              showSideBar = {showSideBar}
+              ifSmallScreen = {screenDimension.width <= 500}
+               />     
+
           <Right 
               notes={notes} 
               deleteNote ={ deleteNote } 
@@ -191,9 +219,9 @@ const ifSmallScreen = () =>{
               onEditNote = {onEditNote}
               back2SideBar ={ back2SideBar }
               showSideBar = {showSideBar}
-              ifSmallScreen = {ifSmallScreen()}
+              ifSmallScreen = {screenDimension.width <= 500}
               />
-              
+   
           <EditProfile 
               closeModal = { closeModal }
               onSave = {onSave}
