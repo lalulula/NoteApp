@@ -41,12 +41,6 @@ function App(){
     text:"This is a note with a long line of text. Notice that the text will automatically wrap to the next line once it reaches the right side of the screen.",
     date: Date.now(),
     tags:[{id: 'Hi', text:'Hi'}, {id: 'My', text:'My'}, {id: 'Name', text:'Name'}, {id: 'is', text:'is'}, {id:'Yunah', text:'Yunah'}]
-  },
-  
-  { id: nanoid(),
-    text:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sit amet felis condimentum, cursus urna ut, mollis urna. Integer convallis lorem lorem. Quisque eget libero sed nunc gravida tristique. Vivamus nec vestibulum nunc. Integer molestie purus ac dolor viverra, non venenatis sem tempus. Aliquam sit amet eleifend lorem. Maecenas id condimentum purus. Phasellus et mauris felis. Ut suscipit metus tempor tempor malesuada. Nunc laoreet justo auctor, elementum elit vel, vehicula massa. Praesent a neque eget est sollicitudin blandit non ac lacus. Morbi vitae dictum neque. Vivamus dolor est, imperdiet et leo in, iaculis consectetur massa.Nunc laoreet metus a augue dignissim, id fringilla turpis blandit. Cras luctus, quam et dignissim viverra, magna libero aliquam ipsum, at finibus libero leo et magna. Nullam volutpat, diam in consequat gravida, velit elit dapibus magna, ut tincidunt nunc tellus nec ante. Sed lorem ante, pharetra et faucibus sodales, tristique id mi. Nullam at massa egestas, iaculis magna molestie, dapibus lectus. Nullam eu turpis massa. Mauris tempor fringilla turpis semper consequat. Sed porta sem dolor, in venenatis leo consequat vel. Nullam et ullamcorper nisi.",
-    date: Date.now(),
-    tags: []
   }
  ]
 
@@ -200,7 +194,7 @@ const[searchText, setSearchText] = useState('');
     <React.Fragment>
       <div id="container">  
           <Left 
-              notes={notes.filter((note)=>note.text.includes(searchText))} 
+              notes={notes.filter((note)=>note.text.toLowerCase().includes(searchText))} 
               addNote = { addNote } 
               profileClicked = { profileClicked }
               selectedNoteId ={ selectedNoteId }
