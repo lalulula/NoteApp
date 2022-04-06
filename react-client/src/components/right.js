@@ -2,7 +2,7 @@ import React from 'react';
 import TopRight from './topR'
 import BottomRight from './bottomR'
 
-function Right({ notes , deleteNote, selectedNote,  back2SideBar, note2Delete, onEditNote, ifSmallScreen, showSideBar}){
+function Right({ notes , deleteNote, selectedNote,  back2SideBar,  onEditNote, ifSmallScreen, showSideBar}){
 
     return(
         <div className="right" 
@@ -14,7 +14,7 @@ function Right({ notes , deleteNote, selectedNote,  back2SideBar, note2Delete, o
                     notes={ notes }
                     deleteNote={ deleteNote }
                     back2SideBar={ back2SideBar }
-                    note2Delete = {note2Delete}/>
+                    selectedNote = {selectedNote}/>
             <BottomRight 
                     notes = {notes}   
                     selectedNote = { selectedNote } 

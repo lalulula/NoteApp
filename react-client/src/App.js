@@ -1,25 +1,3 @@
-// const express = require('express');
-// const mongoose = require('mongoose'); //Connecting to MongoDB
-// const Note = require('./models/note');
-// const User = require('./models/user');
-// const Tag = require('./models/tag');
-
-
-// const app = express();
-// const bodyParser = require('body-parser');
-// app.use(bodyParser.json());
-
-// //Set up mongoose connection BASIC SETUP CODE
-// var mongoDB = 'mongodb://localhost:27017/Note-App'; //database URL here
-// mongoose.connect(mongoDB, { useNewUrlParser: true , useUnifiedTopology: true});
-// var db = mongoose.connection;//get default connection
-// //Bind connection to error event
-// db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-
-
-
-// port = process.env.PORT || 3000;
-// app.listen(port, () => { console.log('server started!')});
 
 import './App.css';
 import React, { useEffect, useState } from 'react';
@@ -30,7 +8,7 @@ import{ nanoid } from 'nanoid';
 
 function App(){
 
-  const initalNoteArray=[ 
+  const initialNoteArray=[
   { id: nanoid(),
     text:"CSE316",
     date: Date.now(),
@@ -41,16 +19,10 @@ function App(){
     text:"This is a note with a long line of text. Notice that the text will automatically wrap to the next line once it reaches the right side of the screen.",
     date: Date.now(),
     tags:[{id: 'Hi', text:'Hi'}, {id: 'My', text:'My'}, {id: 'Name', text:'Name'}, {id: 'is', text:'is'}, {id:'Yunah', text:'Yunah'}]
-  },
-  
-  { id: nanoid(),
-    text:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sit amet felis condimentum, cursus urna ut, mollis urna. Integer convallis lorem lorem. Quisque eget libero sed nunc gravida tristique. Vivamus nec vestibulum nunc. Integer molestie purus ac dolor viverra, non venenatis sem tempus. Aliquam sit amet eleifend lorem. Maecenas id condimentum purus. Phasellus et mauris felis. Ut suscipit metus tempor tempor malesuada. Nunc laoreet justo auctor, elementum elit vel, vehicula massa. Praesent a neque eget est sollicitudin blandit non ac lacus. Morbi vitae dictum neque. Vivamus dolor est, imperdiet et leo in, iaculis consectetur massa.Nunc laoreet metus a augue dignissim, id fringilla turpis blandit. Cras luctus, quam et dignissim viverra, magna libero aliquam ipsum, at finibus libero leo et magna. Nullam volutpat, diam in consequat gravida, velit elit dapibus magna, ut tincidunt nunc tellus nec ante. Sed lorem ante, pharetra et faucibus sodales, tristique id mi. Nullam at massa egestas, iaculis magna molestie, dapibus lectus. Nullam eu turpis massa. Mauris tempor fringilla turpis semper consequat. Sed porta sem dolor, in venenatis leo consequat vel. Nullam et ullamcorper nisi.",
-    date: Date.now(),
-    tags: []
   }
  ]
 
-  const [notes, setNotes] = useState(localStorage.myNotes? JSON.parse(localStorage.myNotes) : initalNoteArray) //use local Storage 
+  const [notes, setNotes] = useState(localStorage.myNotes? JSON.parse(localStorage.myNotes) : initialNoteArray) //use local Storage
   const[selectedNoteId, setSelectedNoteId] = useState('');
 
   useEffect( ()=>{
@@ -215,7 +187,6 @@ const[searchText, setSearchText] = useState('');
               notes={notes} 
               deleteNote ={ deleteNote } 
               selectedNote = { getSelectedNote() }
-              note2Delete = { getSelectedNote() }
               onEditNote = {onEditNote}
               back2SideBar ={ back2SideBar }
               showSideBar = {showSideBar}
