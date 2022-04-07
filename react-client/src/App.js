@@ -172,7 +172,7 @@ const[searchText, setSearchText] = useState('');
     <React.Fragment>
       <div id="container">  
           <Left 
-              notes={notes.filter((note)=>note.text.includes(searchText))} 
+              notes={notes.filter((note)=>note.text.toLowerCase().includes(searchText))} 
               addNote = { addNote } 
               profileClicked = { profileClicked }
               selectedNoteId ={ selectedNoteId }
