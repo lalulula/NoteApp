@@ -1,0 +1,329 @@
+:root {
+  --sidebar-width: 240px;
+  --text-color: rgb(50, 50, 50);
+  --background-color: #ffffff;
+  --light-background-color: #f4f4f4;
+  --nav-bar-color: #ffffff;
+  --selected-color: rgb(229, 241, 253);
+  --action-text-color: #ffffff;
+  --action-color: rgb(58, 99, 197);
+  --border-color: darkgray;
+}
+/*///////////////Main Screen////////////////////// */
+body {
+  background-color: var(--background-color);
+  margin: 0;
+  font-family: Helvetica, Arial;
+  font-size: 20px;
+  height: auto;
+  overflow: hidden;
+}
+#container {
+  display: flex;
+  /* height: 100%; */
+  height: 100vh;
+}
+.left {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  width: var(--sidebar-width);
+  border-left: 2px solid darkgray;
+}
+
+.topL {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid var(--border-color);
+  border-top: 2px solid var(--border-color);
+}
+.bottomL {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+.search {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-bottom: 2px dotted black;
+}
+.note_list {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  width: var(--sidebar-width);
+  border: 2px solid darkgray;
+  background: #eeeeee;
+  border-radius: 7px;
+  pointer-events: none;
+  cursor: pointer;
+}
+
+.note_container {
+  height: 40px;
+  width: auto;
+  border-bottom: 2px dotted black;
+  padding: 2px;
+  cursor: pointer;
+}
+.note_container:hover {
+  background-color: lightgray;
+}
+.selected_note {
+  background-color: rgb(200, 220, 228);
+  font-weight: bold;
+  border-bottom: 2px dotted black;
+}
+.note_preview {
+  padding: 5px;
+  padding-bottom: 0px;
+  font-size: 15px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.note_date {
+  padding: 5px;
+  padding-top: 0px;
+  color: #aaaaaa;
+  font-style: italic;
+  text-align: left;
+  font-size: 12px;
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  border-left: 2px solid darkgray;
+  border-right: 2px solid darkgray;
+}
+.topR {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid darkgray;
+  border-top: 2px solid darkgray;
+}
+.bottomR {
+  flex: 1;
+  padding-right: 10px;
+  height: 100%;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background-color: var(--background-color);
+  padding: 0;
+  font-size: 15px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+button :hover {
+  color: rgba(0, 0, 0, 0.2);
+}
+#back {
+  display: none;
+}
+textarea {
+  /* height: 600px; */
+  height: 100%;
+  width: 100%;
+  border: none;
+  resize: none;
+  font-size: large;
+  overflow: auto;
+  padding: 20px 0 0 10px;
+  background-color: none;
+}
+textarea:focus,
+input:focus {
+  outline: none;
+}
+img {
+  width: 30px;
+  border-radius: 50%;
+}
+.topL .myNotes {
+  margin-top: 10px;
+  margin-bottom: 11px;
+}
+
+/*///////////////////////////// TAGS ///////////////////////////*/
+.tagContainer {
+  height: auto;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  position: fixed;
+  position: sticky;
+  bottom: 0px;
+  font-family: Helvetica, Arial;
+  background-color: rgb(235, 235, 235);
+  border: 5px solid transparent;
+}
+
+.tagContainer .ReactTags__selected {
+  width: inherit;
+  height: inherit;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.tagContainer .ReactTags__tagInputField {
+  background-color: white;
+  width: inherit;
+  height: inherit;
+  font-size: 15px;
+  border: 2px solid rgb(235, 234, 234);
+  margin: 3px 2.5px 3px 2.5px;
+  padding: 5px 0 5px 0;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  outline: none;
+}
+.tagContainer .ReactTags__remove {
+  border: 2px solid rgb(105, 101, 101);
+  background-color: rgb(235, 235, 235);
+  font-size: 10px;
+  margin: 0 3px 0 7px;
+  padding: 3px 5px 3px 5px;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.tagContainer span {
+  font-size: 15px;
+  background-color: rgb(235, 235, 235);
+  border: 2px solid rgb(209, 208, 208);
+  margin: 3px 5px 3px 3px;
+  padding: 3px 2px 3px 2px;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+}
+
+/* ///////////////////////////////Profile//////////////////////////////////////// */
+.editContainer {
+  padding: 5px 10px 30px 10px;
+  align-items: center;
+}
+/*팝업전체*/
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  padding-top: 50px;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.modal-content {
+  /* 모달안에있는내용 */
+  width: 420px;
+  background-color: white;
+  margin: 5% auto 15% auto;
+  border: 1px solid #888;
+  border-radius: 5%;
+  align-items: center;
+}
+
+.p0 {
+  display: flex;
+  justify-content: space-between;
+}
+.p1 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 10px;
+}
+.p2 {
+  margin: 20px 0 30px 0;
+}
+
+.p3 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.save {
+  background-size: 20px;
+  background-color: rgb(59, 59, 218);
+  border-radius: 5px;
+  color: white;
+  border: none;
+  padding: 15px 32px;
+}
+#editP img {
+  width: 40px;
+  margin-left: 10px;
+  border-radius: 50%;
+}
+
+#editP input {
+  width: -webkit-fill-available;
+  height: 25px;
+  margin-bottom: 5px;
+}
+#editP select {
+  width: -webkit-fill-available;
+  height: 30px;
+}
+
+/* These rules only apply if the window's max-width is 500px or less */
+@media all and (max-width: 500px) {
+  .logo {
+    display: none;
+  }
+  #container {
+    flex-direction: column-reverse;
+  }
+  .left {
+    width: auto;
+  }
+  
+  .search {
+    justify-content: center;
+  }
+  #back {
+    display: inline;
+  }
+  .left {
+    border-right: 2px solid darkgray;
+  }
+
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    padding-top: 0px;
+    background-color: rgba(256, 256, 256, 1);
+  }
+  .modal-content {
+    background-color: white;
+    display: contents;
+  }
+  .editContainer {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 300px;
+    overflow: hidden;
+  }
+}
