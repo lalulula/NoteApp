@@ -1,68 +1,43 @@
-// const express = require('express');
-// const mongoose = require('mongoose'); //Connecting to MongoDB
-// const Note = require('./models/note');
-// const User = require('./models/user');
-// const Tag = require('./models/tag');
-
-
-// const app = express();
-// const bodyParser = require('body-parser');
-// app.use(bodyParser.json());
-
-// //Set up mongoose connection BASIC SETUP CODE
-// var mongoDB = 'mongodb://localhost:27017/Note-App'; //database URL here
-// mongoose.connect(mongoDB, { useNewUrlParser: true , useUnifiedTopology: true});
-// var db = mongoose.connection;//get default connection
-// //Bind connection to error event
-// db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-
-
-
-// port = process.env.PORT || 3000;
-// app.listen(port, () => { console.log('server started!')});
-
 import './App.css';
 import React, { useEffect, useState } from 'react';
 import Left from './components/left'
 import Right from './components/right'
 import EditProfile from './components/editProfile'
-import{ nanoid } from 'nanoid';
+import {createNoteAPIMethod, getNoteAPIMethod, deleteNoteByIdAPIMethod, updateNoteAPIMethod} from "./api/client";
 
 function App(){
-
-  const initalNoteArray=[ 
-  { id: nanoid(),
-    text:"CSE316",
-    date: Date.now(),
-    tags:[]
-  },
-
-  { id: nanoid(),
-    text:"This is a note with a long line of text. Notice that the text will automatically wrap to the next line once it reaches the right side of the screen.",
-    date: Date.now(),
-    tags:[{id: 'Hi', text:'Hi'}, {id: 'My', text:'My'}, {id: 'Name', text:'Name'}, {id: 'is', text:'is'}, {id:'Yunah', text:'Yunah'}]
-  }
- ]
-
-  const [notes, setNotes] = useState(localStorage.myNotes? JSON.parse(localStorage.myNotes) : initalNoteArray) //use local Storage 
+  const [notes, setNotes] = useState([]);
   const[selectedNoteId, setSelectedNoteId] = useState('');
 
-  useEffect( ()=>{
-    localStorage.setItem("myNotes", JSON.stringify(notes))}, [notes] );
+  useEffect(() => {
+    function fetchData() {
+        getNoteAPIMethod().then((notes) => {
+            setNotes(notes);
+            console.dir(notes);
+        }).catch((err) => {
+            console.error('Error retrieving note data: ' + err);
+        });
+    };
+    fetchData();
+}, [setNotes]);
 
   const addNote = () => {
     setSearchText('');
     document.getElementById('searchBar').value='';
     document.getElementById('clearSearchBtn').style.color='transparent';
     const newNote = {
-      id: nanoid(),
       text:"New Note",
-      date: Date.now(),
+      lastUpdatedDate: Date.now(),
       tags:[]
     };
-    setNotes([newNote, ...notes]);
-    setSelectedNoteId(newNote.id);
-  }
+    createNoteAPIMethod(newNote).then((response) => {
+      console.log("Created the note on the server");
+      console.dir(response);
+      // history.push(`/notes/${response._id}`);
+      setNotes([response, ...notes]);
+      selectedNoteId(response._id);
+  });
+}
 
   const handleSelectedNote=(id) =>{ //clicking on a note in the list
     setSelectedNoteId(id);
@@ -70,6 +45,9 @@ function App(){
   }
 
   const deleteNote = (e) => {
+    deleteNoteByIdAPIMethod(selectedNoteId).then((response) => {
+      console.log("Deleted the note on the server");
+  });
     const index2Delete = notes.indexOf(notes.find((note) => note.id === selectedNoteId));
     if(index2Delete === 0){ 
       if(notes.length===1){
@@ -98,12 +76,18 @@ function App(){
     }
   }
 
-
   const getSelectedNote=()=>{
     return notes.find((note) => note.id === selectedNoteId);
-
   }
+
   const onEditNote = (updatedNote) => {
+
+    // updateNoteAPIMethod(updatedNote).then((response) => {
+    //     console.log("Updated the note on the server");
+    // }).catch(err => {
+    //     console.error('Error updating note data: ' + err);
+    // })
+
     const updatedNotesArray = notes.map((note)=>{
       if(note.id === selectedNoteId){
         return updatedNote;
@@ -129,26 +113,16 @@ window.onclick = function(event) {
     document.getElementById('editP').style.display= "none";
   }
 ////////////////////////profile to LS/////////////////////////////////////////
-  const[formValues, updateFormValues] = useState(localStorage.profileInfo? JSON.parse(localStorage.profileInfo) : [])
-
-  useEffect( ()=>{
-    localStorage.setItem("profileInfo", JSON.stringify(formValues), [formValues])
-  
-    });
-
-  const handleChangeProfile = (e)=>{
+const[formValues, updateFormValues] = useState([])
+const handleChangeProfile = (e)=>{
     updateFormValues((prevValues)=>({
       ...prevValues,
       [e.target.name] : e.target.value
     }))
 
   }
-  const[theme, updateTheme]=useState(localStorage.themes? JSON.parse(localStorage.themes): '' )
 
-  useEffect(()=>{
-    localStorage.setItem("themes", JSON.stringify(theme), theme)
-  })
-
+const[theme, updateTheme]=useState( '' )
 const handleThemeChange = ()=>{
     console.log("Changing theme");
     const select = document.querySelector(".select");
@@ -161,6 +135,8 @@ const handleThemeChange = ()=>{
     alert("Saved");
     closeModal();
   }
+/////////////////////////SEARCH///////////////////////////////////////
+const[searchText, setSearchText] = useState('');
 ////////////////////window size getter/////////////////////////////////
 function getWindowDimensions() {
   const { innerWidth: width} = window;
@@ -180,15 +156,13 @@ function useWindowDimensions() {
 
   return windowDimensions;
 }
-/////////////////sideBar when smaller window size/////////////////////////////////////////
+const screenDimension = useWindowDimensions();
+
 const [showSideBar, setShowSideBar] = useState(false);
 const back2SideBar = () =>{
   setShowSideBar(true);
 }
-const screenDimension = useWindowDimensions();
 
-/////////////////////SEARCH///////////////////////////////////////
-const[searchText, setSearchText] = useState('');
 
   return (
     <React.Fragment>
@@ -209,7 +183,6 @@ const[searchText, setSearchText] = useState('');
               notes={notes} 
               deleteNote ={ deleteNote } 
               selectedNote = { getSelectedNote() }
-              note2Delete = { getSelectedNote() }
               onEditNote = {onEditNote}
               back2SideBar ={ back2SideBar }
               showSideBar = {showSideBar}
