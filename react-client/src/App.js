@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Left from './components/left'
 import Right from './components/right'
 import EditProfile from './components/editProfile'
-import {createNoteAPIMethod, getNoteAPIMethod, deleteNoteByIdAPIMethod, updateNoteAPIMethod} from "./api/client";
+import {createNoteAPIMethod, getNoteAPIMethod, deleteNoteByIdAPIMethod, updateNoteAPIMethod,getUserAPIMethod} from "./api/client";
 
 function App(){
   const [notes, setNotes] = useState([]);
@@ -11,7 +11,7 @@ function App(){
 
   useEffect(() => {
     function fetchData() {
-        getNoteAPIMethod().then((notes) => {
+        getNoteAPIMethod().then((notes) => { //retreiving all notes
             setNotes(notes);
             console.dir(notes);
         }).catch((err) => {
@@ -35,7 +35,7 @@ function App(){
       console.dir(response);
       // history.push(`/notes/${response._id}`);
       setNotes([response, ...notes]);
-      selectedNoteId(response._id);
+     setSelectedNoteId(response._id);
   });
 }
 
@@ -48,48 +48,45 @@ function App(){
     deleteNoteByIdAPIMethod(selectedNoteId).then((response) => {
       console.log("Deleted the note on the server");
   });
-    const index2Delete = notes.indexOf(notes.find((note) => note.id === selectedNoteId));
+    const index2Delete = notes.indexOf(notes.find((note) => note._id === selectedNoteId));
+    console.log(index2Delete)
     if(index2Delete === 0){ 
       if(notes.length===1){
-        console.log("CASE1");
-        setNotes(notes.filter((note) => note.id !== e));
+        setNotes(notes.filter((note) => note._id !== e));
       }
       else{
-        console.log("CASE1");
-        setNotes(notes.filter((note) => note.id !== e));
-        const newArray = notes.filter((note) => note.id !== e);
-        setSelectedNoteId(newArray[0].id);
+        setNotes(notes.filter((note) => note._id !== e));
+        const newArray = notes.filter((note) => note._id !== e);
+        setSelectedNoteId(newArray[0]._id);
       }
     }
     else if(index2Delete === notes.length-1){
-      console.log("CASE2");
-      setNotes(notes.filter((note) => note.id !== e));
-      const newArray = notes.filter((note) => note.id !== e);
-      setSelectedNoteId(newArray[newArray.length-1].id);
+      setNotes(notes.filter((note) => note._id !== e));
+      const newArray = notes.filter((note) => note._id !== e);
+      setSelectedNoteId(newArray[newArray.length-1]._id);
     }
     else{
-      console.log("CASE3");
       const newDisplayedNote = index2Delete;
-      setNotes(notes.filter((note) => note.id !== e));
-      const newArray = notes.filter((note) => note.id !== e);
-      setSelectedNoteId(newArray[newDisplayedNote].id);
+      setNotes(notes.filter((note) => note._id !== e));
+      const newArray = notes.filter((note) => note._id !== e);
+      setSelectedNoteId(newArray[newDisplayedNote]._id);
     }
   }
 
   const getSelectedNote=()=>{
-    return notes.find((note) => note.id === selectedNoteId);
+    return notes.find((note) => note._id === selectedNoteId);
   }
 
   const onEditNote = (updatedNote) => {
-
-    // updateNoteAPIMethod(updatedNote).then((response) => {
-    //     console.log("Updated the note on the server");
-    // }).catch(err => {
-    //     console.error('Error updating note data: ' + err);
-    // })
-
+    updateNoteAPIMethod(updatedNote).then((response) => {
+      console.log("Updated note is: ",updatedNote)
+      console.log("Updated note on the server");
+  }).catch(err => {
+    console.log(updatedNote)
+    console.error('Error updating note data: ' + err);
+  })
     const updatedNotesArray = notes.map((note)=>{
-      if(note.id === selectedNoteId){
+      if(note._id === selectedNoteId){
         return updatedNote;
       }
       return note;
@@ -114,6 +111,19 @@ window.onclick = function(event) {
   }
 ////////////////////////profile to LS/////////////////////////////////////////
 const[formValues, updateFormValues] = useState([])
+
+useEffect(() => {
+  function fetchData() {
+      getUserAPIMethod().then((formValues) => { //retreiving all formValues
+        updateFormValues(formValues);
+          console.dir(formValues);
+      }).catch((err) => {
+          console.error('Error retrieving note data: ' + err);
+      });
+  };
+  fetchData();
+}, [updateFormValues]);
+
 const handleChangeProfile = (e)=>{
     updateFormValues((prevValues)=>({
       ...prevValues,

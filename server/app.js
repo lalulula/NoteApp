@@ -55,6 +55,7 @@ app.put('/api/notes/:id', async function (req,res) {
     console.log("PUT with id: " + id + ", body: " + JSON.stringify(req.body));
     await User.findByIdAndUpdate(id, {text, lastUpdatedDate, tags},
         {runValidators: true});
+        console.log("Added in server");
     res.sendStatus(204);
 })
 //deleting a note with id

@@ -3,7 +3,7 @@ import Note from './note';
 import Search from './search';
 function BottomLeft({ notes, selectedNoteId, handleSelectedNote, handleSearchText, setSelectedNoteId}){
 
-    const sortedNotes = notes.sort((a , b)=> b.date - a.date);
+    const sortedNotes = notes.sort((a , b)=> b.lastUpdatedDate - a.lastUpdatedDate);
 
         return(
             <div className="bottomL">
@@ -16,16 +16,17 @@ function BottomLeft({ notes, selectedNoteId, handleSelectedNote, handleSearchTex
                      <div id="note_list">  
                         {sortedNotes.map( (note) => 
                             <Note 
-                                key={note.id} 
-                                id={note.id} 
+                                key={note._id} 
+                                id={note._id} 
                                 text={note.text} 
-                                date ={new Date(note.date).toLocaleDateString("en",
+                                date ={new Date(note.lastUpdatedDate).toLocaleDateString("en",
                                                         {hour: "2-digit",
                                                         minute: "2-digit",
                                                         second: "2-digit"})
                                         } 
                                 selectedNoteId ={ selectedNoteId }
-                                handleSelectedNote ={ handleSelectedNote }/>)}  
+                                handleSelectedNote ={ handleSelectedNote }/>
+                                )}  
                     </div>
                 </div>
         );

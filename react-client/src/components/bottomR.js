@@ -1,5 +1,6 @@
 import React from 'react';
 import Tags from './tag';
+import {updateNoteAPIMethod} from "../api/client";
 function BottomRight( {notes, selectedNote , onEditNote, tags, handleDrag}){
     const txtStyle={
             height: "100%",
@@ -14,13 +15,15 @@ function BottomRight( {notes, selectedNote , onEditNote, tags, handleDrag}){
             textAlign: "center"
     }
 
-    const handleChange = (value) => {  
-        onEditNote({
-            id: selectedNote.id,
+    const handleChange = (value) => { 
+        var newNote={
+            _id: selectedNote._id,
             text: value, 
-            date: Date.now(),
-            tags: tags
-        });
+            lastUpdatedDate: Date.now(),
+            tags:selectedNote.tags
+        } 
+        onEditNote(newNote);
+
     }
 
     if(!selectedNote) {
@@ -32,7 +35,7 @@ function BottomRight( {notes, selectedNote , onEditNote, tags, handleDrag}){
         <div className="bottomR">
             <textarea id="textA" 
                     value={selectedNote.text}
-                    onChange={ (event) => handleChange( event.target.value)}
+                    onChange={ (event) => handleChange(event.target.value)}
                     style={{fontFamily: 'Helvetica, Arial'}}>
             </textarea>
                 <Tags  
@@ -41,6 +44,7 @@ function BottomRight( {notes, selectedNote , onEditNote, tags, handleDrag}){
                     tags={tags} 
                     selectedNote = { selectedNote } 
                     onEditNote ={onEditNote}
+                    autoFocus = {false}
                      />
         </div>
     );

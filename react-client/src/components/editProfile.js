@@ -19,12 +19,13 @@ function EditProfile({ closeModal, onSave, handleChangeProfile, formValues, hand
                             <button><span>Remove Image</span></button>
                         </div>
                         <div className="p2">
-                            Name<br/> <input type="text" id="pName"  name="pName" value={formValues.pName}
+                            Name<br/> <input type="text" id="pName"  name="pName" value={formValues.pName||''}
                                                 onChange={handleChangeProfile}/><br/>
-                            Email<br/> <input type="text" id="pEmail" size="30" name="pEmail" value={formValues.pEmail}
+                            Email<br/> <input type="text" id="pEmail" size="30" name="pEmail" value={formValues.pEmail||''}
                                                 onChange={handleChangeProfile}/><br/>
                             Color Scheme<br/>
-                            <select className ="select" onChange={handleThemeChange} value = {theme}>
+                            {/* <select className ="select" onChange={handleThemeChange} value = {theme}> */}
+                            <select className ="select" name = "pTheme" onChange={handleChangeProfile} value = {formValues.theme||''}>
                                 <option value="Light">Light</option>
                                 <option value="Dark">Dark</option>
                             </select>

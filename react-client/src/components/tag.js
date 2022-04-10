@@ -12,18 +12,18 @@ function Tags({tags, selectedNote, onEditNote}){
 
     const handleDelete = (i)=>{
         onEditNote({
-            id: selectedNote.id,
+            _id: selectedNote._id,
             text: selectedNote.text,
-            date: Date.now(),
+            lastUpdatedDate: Date.now(),
             tags: [...tags.filter((tag,index) => index !== i)]
         });
     }
 
     const handleAddition = (tag) =>{
             onEditNote({
-                id: selectedNote.id,
+                _id: selectedNote._id,
                 text: selectedNote.text,
-                date: Date.now(),
+                lastUpdatedDate: Date.now(),
                 tags: [...tags,tag]
             });
     }
@@ -32,16 +32,16 @@ function Tags({tags, selectedNote, onEditNote}){
         newTags.splice(currPos, 1);
         newTags.splice(newPos, 0, tag);
         onEditNote({
-            id: selectedNote.id,
+            _id: selectedNote._id,
             text: selectedNote.text,
-            date: Date.now(),
+            lastUpdatedDate: Date.now(),
             tags: newTags
         });
       };
     
     return(
             <div className='tagContainer'>
-                    <ReactTags  tags={tags} placeholder={"Enter a tag"} handleAddition ={handleAddition} 
+                    <ReactTags  tags={tags} key ={tags._id} placeholder={"Enter a tag"} handleAddition ={handleAddition} 
                                 handleDelete={handleDelete} handleDrag={handleDrag} className="tag" 
                                 autoFocus = {false} inline={true} allowDeleteFromEmptyInput={false}
                                 allowUnique={false}

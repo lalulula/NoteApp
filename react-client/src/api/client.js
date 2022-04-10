@@ -8,7 +8,7 @@ const defaultHeaders = {
 // More on the fetch method: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
 export const getNoteAPIMethod = () => {
     return fetch(`/api/notes`, {
-        ...defaultHeaders,
+        ...defaultHeaders,              // The method defaults to GET
     }).then(checkStatus)
         .then(parseJSON);
 }
@@ -23,7 +23,7 @@ export const getNoteByIdAPIMethod = (noteId) => {
 export const createNoteAPIMethod = (note) => {
     return fetch(`/api/notes`, {
         ...defaultHeaders,
-        method: 'POST', // The method defaults to GET
+        method: 'POST', 
         body: JSON.stringify(note),
     }).then(checkStatus)
         .then(parseJSON);
@@ -32,7 +32,7 @@ export const createNoteAPIMethod = (note) => {
 export const updateNoteAPIMethod = (note) => {
     return fetch(`/api/notes/${note._id}`, {
         ...defaultHeaders,
-        method: 'PUT', // The method defaults to GET
+        method: 'PUT', 
         body: JSON.stringify(note),
     }).then(checkStatus);
 }

@@ -10,7 +10,7 @@ function Search({ handleSearchText,notes,setSelectedNoteId}){
 
     const handleOnChange=(e)=>{
         handleSearchText(e.target.value);
-        setSelectedNoteId(notes[0].id);
+        setSelectedNoteId(notes[0]._id);
         document.getElementById('clearSearchBtn').style.color='steelblue';
     }
     return(
