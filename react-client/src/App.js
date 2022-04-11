@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Left from './components/left'
 import Right from './components/right'
 import EditProfile from './components/editProfile'
-import {createNoteAPIMethod, getNoteAPIMethod, deleteNoteByIdAPIMethod, updateNoteAPIMethod,getUserAPIMethod} from "./api/client";
+import {createNoteAPIMethod, getNotesAPIMethod, deleteNoteByIdAPIMethod, updateNoteAPIMethod} from "./api/client";
 
 function App(){
   const [notes, setNotes] = useState([]);
@@ -11,9 +11,9 @@ function App(){
 
   useEffect(() => {
     function fetchData() {
-        getNoteAPIMethod().then((notes) => { //retreiving all notes
+        getNotesAPIMethod().then((notes) => { //retreiving all notes
             setNotes(notes);
-            console.dir(notes);
+            // console.dir(notes);
         }).catch((err) => {
             console.error('Error retrieving note data: ' + err);
         });
@@ -33,7 +33,6 @@ function App(){
     createNoteAPIMethod(newNote).then((response) => {
       console.log("Created the note on the server");
       console.dir(response);
-      // history.push(`/notes/${response._id}`);
       setNotes([response, ...notes]);
      setSelectedNoteId(response._id);
   });
@@ -78,13 +77,6 @@ function App(){
   }
 
   const onEditNote = (updatedNote) => {
-    updateNoteAPIMethod(updatedNote).then((response) => {
-      console.log("Updated note is: ",updatedNote)
-      console.log("Updated note on the server");
-  }).catch(err => {
-    console.log(updatedNote)
-    console.error('Error updating note data: ' + err);
-  })
     const updatedNotesArray = notes.map((note)=>{
       if(note._id === selectedNoteId){
         return updatedNote;
@@ -92,58 +84,23 @@ function App(){
       return note;
     });
     setNotes(updatedNotesArray);
+    updateNoteAPIMethod(updatedNote).then((response) => {
+      console.log("Updated note on the server");
+  }).catch(err => {
+    console.log(updatedNote)
+    console.error('Error updating note data: ' + err);
+  })
   }
+  
 
 ////////////////////////profile/////////////////////////////////////////
 window.onclick = function(event) {
   if (event.target === document.getElementById('editP')) {
-    console.log("CLICKED")
     document.getElementById('editP').style.display = "none";
   }
 }
   const profileClicked = () =>{
-    console.log("PROFILE CLICKED", document.getElementById('editP'))
     document.getElementById('editP').style.display= "block"
-  }
-  const closeModal = () =>{
-    console.log("MODAL CLOSED", document.getElementById('editP'));
-    document.getElementById('editP').style.display= "none";
-  }
-////////////////////////profile to LS/////////////////////////////////////////
-const[formValues, updateFormValues] = useState([])
-
-useEffect(() => {
-  function fetchData() {
-      getUserAPIMethod().then((formValues) => { //retreiving all formValues
-        updateFormValues(formValues);
-          console.dir(formValues);
-      }).catch((err) => {
-          console.error('Error retrieving note data: ' + err);
-      });
-  };
-  fetchData();
-}, [updateFormValues]);
-
-const handleChangeProfile = (e)=>{
-    updateFormValues((prevValues)=>({
-      ...prevValues,
-      [e.target.name] : e.target.value
-    }))
-
-  }
-
-const[theme, updateTheme]=useState( '' )
-const handleThemeChange = ()=>{
-    console.log("Changing theme");
-    const select = document.querySelector(".select");
-    const currentValue = select.options[select.selectedIndex].value;
-    console.log(currentValue)
-    updateTheme(currentValue);
-
-}
-  const onSave = (e) =>{
-    alert("Saved");
-    closeModal();
   }
 /////////////////////////SEARCH///////////////////////////////////////
 const[searchText, setSearchText] = useState('');
@@ -199,14 +156,7 @@ const back2SideBar = () =>{
               ifSmallScreen = {screenDimension.width <= 500}
               />
    
-          <EditProfile 
-              closeModal = { closeModal }
-              onSave = {onSave}
-              handleChangeProfile = { handleChangeProfile }
-              formValues = { formValues }
-              handleThemeChange = {handleThemeChange}
-              theme ={theme}
-              />
+          <EditProfile/>
       </div>
 
     </React.Fragment>

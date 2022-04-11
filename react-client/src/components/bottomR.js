@@ -1,6 +1,5 @@
 import React from 'react';
 import Tags from './tag';
-import {updateNoteAPIMethod} from "../api/client";
 function BottomRight( {notes, selectedNote , onEditNote, tags, handleDrag}){
     const txtStyle={
             height: "100%",
@@ -20,7 +19,7 @@ function BottomRight( {notes, selectedNote , onEditNote, tags, handleDrag}){
             _id: selectedNote._id,
             text: value, 
             lastUpdatedDate: Date.now(),
-            tags:selectedNote.tags
+            tags:tags
         } 
         onEditNote(newNote);
 

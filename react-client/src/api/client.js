@@ -6,16 +6,9 @@ const defaultHeaders = {
 }
 ////////////////////Note////////////////////////
 // More on the fetch method: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
-export const getNoteAPIMethod = () => {
+export const getNotesAPIMethod = () => {
     return fetch(`/api/notes`, {
         ...defaultHeaders,              // The method defaults to GET
-    }).then(checkStatus)
-        .then(parseJSON);
-}
-
-export const getNoteByIdAPIMethod = (noteId) => {
-    return fetch(`/api/notes/${noteId}`, {
-        ...defaultHeaders,
     }).then(checkStatus)
         .then(parseJSON);
 }
@@ -53,8 +46,8 @@ export const getUserAPIMethod = () => {
         .then(parseJSON);
 }
 
-export const getUserByIdAPIMethod = (userId) => {
-    return fetch(`/api/users/${userId}`, {
+export const getCurrentUserAPIMethod = () => {
+    return fetch(`/api/users/currentUser`, {
         ...defaultHeaders,
     }).then(checkStatus)
         .then(parseJSON);
@@ -81,6 +74,12 @@ export const deleteUserByIdAPIMethod = (userId) => {
     return fetch(`/api/users/${userId}`, {
         ...defaultHeaders,
         method: 'DELETE',
+    }).then(checkStatus)
+        .then(parseJSON);
+}
+export const getUserByIdAPIMethod = (userId) => {
+    return fetch(`/api/users/${userId}`, {
+        ...defaultHeaders,
     }).then(checkStatus)
         .then(parseJSON);
 }

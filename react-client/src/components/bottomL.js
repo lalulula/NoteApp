@@ -3,7 +3,7 @@ import Note from './note';
 import Search from './search';
 function BottomLeft({ notes, selectedNoteId, handleSelectedNote, handleSearchText, setSelectedNoteId}){
 
-    const sortedNotes = notes.sort((a , b)=> b.lastUpdatedDate - a.lastUpdatedDate);
+    const sortedNotes = notes.sort((a , b)=> Date.parse(b.lastUpdatedDate) - Date.parse(a.lastUpdatedDate));
 
         return(
             <div className="bottomL">
@@ -14,6 +14,7 @@ function BottomLeft({ notes, selectedNoteId, handleSelectedNote, handleSearchTex
                             />
 
                      <div id="note_list">  
+                     {/* {notes.map( (note) =>  */}
                         {sortedNotes.map( (note) => 
                             <Note 
                                 key={note._id} 
@@ -33,6 +34,3 @@ function BottomLeft({ notes, selectedNoteId, handleSelectedNote, handleSearchTex
 }
 
 export default BottomLeft;
-
-
- 

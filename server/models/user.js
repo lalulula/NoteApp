@@ -4,9 +4,9 @@ var Schema = mongoose.Schema;
 
 var UserSchema = new Schema(
     {
-        name: {type: String, required: true},
-        email: {type: String, required: true},
-        theme: {type: String, enum:['Light', 'Dark'], default:'Light'},
+        Name: {type: String, required: true},
+        Email: {type: String, required: true},
+        Theme: {type: String, enum:['Light', 'Dark']},
     },{versionKey: false }
 );
 
