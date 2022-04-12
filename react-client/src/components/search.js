@@ -1,6 +1,6 @@
 import React  from 'react';
 
-function Search({ handleSearchText,notes,setSelectedNoteId}){
+function Search({ handleSearchText,notes,setSelectedNoteId, selectedNote}){
     const clearSearchBar =() =>{
         document.getElementById('searchBar').value='';
         handleSearchText('');
@@ -16,7 +16,7 @@ function Search({ handleSearchText,notes,setSelectedNoteId}){
     return(
         <div className= "search">
                         <span className="material-icons">search</span>
-                        <input id="searchBar" onChange={handleOnChange} type="text" name="search" placeholder="Search all notes"
+                        <input id="searchBar" onChange={handleOnChange} disabled={selectedNote?false:true} type="text" name="search" placeholder="Search all notes"
                                   style={{border: 'none', marginTop: '10px', marginBottom: '10px'}} 
                                   autoComplete="off"/>
                         <button id="clearSearchBtn" style={{color:"transparent"}} onClick= {clearSearchBar}>✖</button>

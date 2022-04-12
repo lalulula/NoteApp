@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Left from './components/left'
 import Right from './components/right'
 import EditProfile from './components/editProfile'
@@ -90,9 +90,25 @@ function App(){
     console.log(updatedNote)
     console.error('Error updating note data: ' + err);
   })
-  }
+  saveNotesOnServer(updatedNote)
+}
   
+  function debounce(func, timeout=1000){
+    let timer;
+    return(...args) => {
+      clearTimeout(timer);
+      timer = setTimeout(()=>{func.apply (this, args);} , timeout);
+    }
+  }
 
+  const saveNotesOnServer = useCallback(debounce(( theNote ) => {
+    /* your debounced code to save to the server here */  
+    updateNoteAPIMethod(theNote).then((res)=>{
+      console.dir(res);
+    }).catch((err)=>{
+      console.error('Error retrieving note data: ', err);
+    })
+}), []);
 ////////////////////////profile/////////////////////////////////////////
 window.onclick = function(event) {
   if (event.target === document.getElementById('editP')) {
@@ -139,6 +155,7 @@ const back2SideBar = () =>{
               addNote = { addNote } 
               profileClicked = { profileClicked }
               selectedNoteId ={ selectedNoteId }
+              selectedNote = { getSelectedNote() }
               handleSelectedNote ={ handleSelectedNote }
               handleSearchText ={setSearchText}
               setSelectedNoteId={setSelectedNoteId}

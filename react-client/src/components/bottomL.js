@@ -1,7 +1,7 @@
 import React from 'react';
 import Note from './note';
 import Search from './search';
-function BottomLeft({ notes, selectedNoteId, handleSelectedNote, handleSearchText, setSelectedNoteId}){
+function BottomLeft({ notes,selectedNote, selectedNoteId, handleSelectedNote, handleSearchText, setSelectedNoteId}){
 
     const sortedNotes = notes.sort((a , b)=> Date.parse(b.lastUpdatedDate) - Date.parse(a.lastUpdatedDate));
 
@@ -11,10 +11,10 @@ function BottomLeft({ notes, selectedNoteId, handleSelectedNote, handleSearchTex
                         handleSearchText={handleSearchText}
                         setSelectedNoteId={setSelectedNoteId}
                         notes={notes}
+                        selectedNote={selectedNote}
                             />
 
                      <div id="note_list">  
-                     {/* {notes.map( (note) =>  */}
                         {sortedNotes.map( (note) => 
                             <Note 
                                 key={note._id} 

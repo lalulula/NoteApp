@@ -5,10 +5,12 @@ const User = require('./models/user');
 
 const app = express();
 const bodyParser = require('body-parser');
+const { ObjectId } = require('mongodb');
 app.use(bodyParser.json());
 
 //Set up mongoose connection BASIC SETUP CODE
-var mongoDB = 'mongodb://localhost:27017/NoteApp'; //database URL
+// var mongoDB = 'mongodb://localhost:27017/NoteApp'; //database URL
+var mongoDB = 'mongodb+srv://YunahKim:yunah123@noteapp.hk7j3.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
 mongoose.connect(mongoDB, { useNewUrlParser: true , useUnifiedTopology: true});
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
@@ -24,8 +26,7 @@ function wrapAsync(fn) {
 app.get('/api/notes', wrapAsync(async function (req,res) {
     const notes = await Note.find({});
     console.log("notes:" , notes);
-    console.log(notes[0].tags)
-    res.json(notes);
+    res.json(notes ? notes : []);
 }));
 
 //creating a new note
@@ -68,6 +69,7 @@ app.get('/api/users/currentUser', async function (req,res) {
     const users = await User.find({});
     if(users.length >= 1){
         res.json(users[0]);
+        console.dir(users[0])
     }
     else{
         res.sendStatus(204);
