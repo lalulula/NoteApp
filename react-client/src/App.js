@@ -126,6 +126,12 @@ window.onclick = function(event) {
   }
 /////////////////////////SEARCH///////////////////////////////////////
 const[searchText, setSearchText] = useState('');
+
+const clearSearchBar =() =>{
+  console.log("notes after", notes);
+  setSelectedNoteId(notes[0]._id);
+  document.getElementById('clearSearchBtn').style.color='transparent'
+}
 ////////////////////window size getter/////////////////////////////////
 function getWindowDimensions() {
   const { innerWidth: width} = window;
@@ -152,7 +158,6 @@ const back2SideBar = () =>{
   setShowSideBar(true);
 }
 
-
   return (
     <React.Fragment>
       <div id="container">  
@@ -167,6 +172,7 @@ const back2SideBar = () =>{
               setSelectedNoteId={setSelectedNoteId}
               showSideBar = {showSideBar}
               ifSmallScreen = {screenDimension.width <= 500}
+              clearSearchBar={clearSearchBar}
                />     
 
           <Right 
