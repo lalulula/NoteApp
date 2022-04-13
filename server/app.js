@@ -10,7 +10,7 @@ app.use(bodyParser.json());
 
 //Set up mongoose connection BASIC SETUP CODE
 // var mongoDB = 'mongodb://localhost:27017/NoteApp'; //database URL
-var mongoDB = 'mongodb+srv://YunahKim:yunah123@noteapp.hk7j3.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
+var mongoDB = 'mongodb+srv://YunahKim:yunah123@cluster0.hk7j3.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
 mongoose.connect(mongoDB, { useNewUrlParser: true , useUnifiedTopology: true});
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
@@ -69,12 +69,24 @@ app.get('/api/users/currentUser', async function (req,res) {
     const users = await User.find({});
     if(users.length >= 1){
         res.json(users[0]);
-        console.dir(users[0])
+    }
+    else if(users.length == 0){
+        res.json([{Name: "Yunah", Email:"yunah.kim@gmail.com",Theme:"Dark"}])
     }
     else{
         res.sendStatus(204);
     }
 });
+
+//Updating a user
+app.put('/api/users/:id', async function (req,res) {
+    const id = req.params.id;
+    const {Name, Email, Theme} = req.body;
+    console.log("PUT with id: " + id + ", body: " + JSON.stringify(req.body));
+    await User.findByIdAndUpdate(id, {Name, Email, Theme},
+        {runValidators: true});
+    res.sendStatus(204);
+})
 
 //creating a new user
 app.post('/api/users', async function (req,res) {
@@ -93,15 +105,7 @@ app.post('/api/users', async function (req,res) {
         res.send(error.message);
     }
 })
-//Updating a user
-app.put('/api/users/:id', async function (req,res) {
-    const id = req.params.id;
-    const {Name, Email, Theme} = req.body;
-    console.log("PUT with id: " + id + ", body: " + JSON.stringify(req.body));
-    await User.findByIdAndUpdate(id, {Name, Email, Theme},
-        {runValidators: true});
-    res.sendStatus(204);
-})
+
 //deleting a user with id
 app.delete('/api/users/:id', async function (req,res){
     const id = req.params.id;

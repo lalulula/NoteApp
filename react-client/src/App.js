@@ -9,6 +9,11 @@ function App(){
   const [notes, setNotes] = useState([]);
   const[selectedNoteId, setSelectedNoteId] = useState('');
 
+  const getSelectedNote=()=>{
+    return notes.find((note) => note._id === selectedNoteId);
+  }
+  const selectedNote = getSelectedNote();
+
   useEffect(() => {
     function fetchData() {
         getNotesAPIMethod().then((notes) => { //retreiving all notes
@@ -48,7 +53,6 @@ function App(){
       console.log("Deleted the note on the server");
   });
     const index2Delete = notes.indexOf(notes.find((note) => note._id === selectedNoteId));
-    console.log(index2Delete)
     if(index2Delete === 0){ 
       if(notes.length===1){
         setNotes(notes.filter((note) => note._id !== e));
@@ -72,11 +76,13 @@ function App(){
     }
   }
 
-  const getSelectedNote=()=>{
-    return notes.find((note) => note._id === selectedNoteId);
-  }
 
   const onEditNote = (updatedNote) => {
+    if(notes.indexOf(selectedNote)!=0){
+      notes.splice(notes.indexOf(selectedNote), 1);
+      notes.splice(0, 0, selectedNote);
+    }
+
     const updatedNotesArray = notes.map((note)=>{
       if(note._id === selectedNoteId){
         return updatedNote;
@@ -84,13 +90,13 @@ function App(){
       return note;
     });
     setNotes(updatedNotesArray);
+
     updateNoteAPIMethod(updatedNote).then((response) => {
       console.log("Updated note on the server");
-  }).catch(err => {
-    console.log(updatedNote)
+    }).catch(err => {
     console.error('Error updating note data: ' + err);
-  })
-  saveNotesOnServer(updatedNote)
+    })
+    saveNotesOnServer(updatedNote)
 }
   
   function debounce(func, timeout=1000){

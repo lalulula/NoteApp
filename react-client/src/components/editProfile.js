@@ -1,6 +1,7 @@
 import React, { useEffect, useState} from 'react';
 import profileImg from './profileImg.jpg'
-import {getUserAPIMethod,getCurrentUserAPIMethod, updateUserAPIMethod} from "../api/client";
+import {getCurrentUserAPIMethod, updateUserAPIMethod} from "../api/client";
+import {createUserAPIMethod, deleteUserByIdAPIMethod} from "../api/client";
 
 function EditProfile(){
 

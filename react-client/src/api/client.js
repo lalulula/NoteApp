@@ -53,6 +53,14 @@ export const getCurrentUserAPIMethod = () => {
         .then(parseJSON);
 }
 
+export const updateUserAPIMethod = (user) => {
+    return fetch(`/api/users/${user._id}`, {
+        ...defaultHeaders,
+        method: 'PUT', 
+        body: JSON.stringify(user),
+    }).then(checkStatus);
+}
+
 export const createUserAPIMethod = (user) => {
     return fetch(`/api/users`, {
         ...defaultHeaders,
@@ -62,14 +70,6 @@ export const createUserAPIMethod = (user) => {
         .then(parseJSON);
 }
 
-export const updateUserAPIMethod = (user) => {
-    return fetch(`/api/users/${user._id}`, {
-        ...defaultHeaders,
-        method: 'PUT', 
-        body: JSON.stringify(user),
-    }).then(checkStatus);
-}
-
 export const deleteUserByIdAPIMethod = (userId) => {
     return fetch(`/api/users/${userId}`, {
         ...defaultHeaders,
@@ -77,12 +77,13 @@ export const deleteUserByIdAPIMethod = (userId) => {
     }).then(checkStatus)
         .then(parseJSON);
 }
-export const getUserByIdAPIMethod = (userId) => {
-    return fetch(`/api/users/${userId}`, {
-        ...defaultHeaders,
-    }).then(checkStatus)
-        .then(parseJSON);
-}
+
+// export const getUserByIdAPIMethod = (userId) => {
+//     return fetch(`/api/users/${userId}`, {
+//         ...defaultHeaders,
+//     }).then(checkStatus)
+//         .then(parseJSON);
+// }
 
 
 function checkStatus(response) {
