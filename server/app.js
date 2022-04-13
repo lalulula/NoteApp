@@ -70,9 +70,9 @@ app.get('/api/users/currentUser', async function (req,res) {
     if(users.length >= 1){
         res.json(users[0]);
     }
-    else if(users.length == 0){
-        res.json([{Name: "Yunah", Email:"yunah.kim@gmail.com",Theme:"Dark"}])
-    }
+    // else if(users.length == 0){
+    //     res.json([{Name: "Yunah", Email:"yunah.kim@gmail.com",Theme:"Dark"}])
+    // }
     else{
         res.sendStatus(204);
     }
