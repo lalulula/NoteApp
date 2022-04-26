@@ -4,7 +4,7 @@ const defaultHeaders = {
         'Content-Type': 'application/json; charset=UTF-8'
     },
 }
-////////////////////Note////////////////////////
+///////////////////////////////////////////////Note///////////////////////////////////////////////////////////
 // More on the fetch method: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
 export const getNotesAPIMethod = () => {
     return fetch(`/api/notes`, {
@@ -70,13 +70,23 @@ export const createUserAPIMethod = (user) => {
         .then(parseJSON);
 }
 
-export const deleteUserByIdAPIMethod = (userId) => {
-    return fetch(`/api/users/${userId}`, {
-        ...defaultHeaders,
-        method: 'DELETE',
+
+export const uploadImageToCloudinaryAPIMethod = (formData) => {
+    const cloudName = 'yunahkim' // TODO: Write in your own Cloudinary account
+    return fetch(`https://api.cloudinary.com/v1_1/${cloudName}/upload`, {
+        method: 'POST',
+        body: formData,
     }).then(checkStatus)
         .then(parseJSON);
 }
+
+// export const deleteUserByIdAPIMethod = (userId) => {
+//     return fetch(`/api/users/${userId}`, {
+//         ...defaultHeaders,
+//         method: 'DELETE',
+//     }).then(checkStatus)
+//         .then(parseJSON);
+// }
 
 // export const getUserByIdAPIMethod = (userId) => {
 //     return fetch(`/api/users/${userId}`, {

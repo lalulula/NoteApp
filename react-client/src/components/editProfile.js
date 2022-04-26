@@ -1,16 +1,16 @@
 import React, { useEffect, useState} from 'react';
-import profileImg from './profileImg.jpg'
-import {getCurrentUserAPIMethod, updateUserAPIMethod} from "../api/client";
+import profileImg from './defaultpImg.jpg'
+import {getCurrentUserAPIMethod, updateUserAPIMethod, uploadImageToCloudinaryAPIMethod} from "../api/client";
 import {createUserAPIMethod, deleteUserByIdAPIMethod} from "../api/client";
 
-function EditProfile(){
+function EditProfile({userProfile, updateUserProfile}){
 
-    const[formValues, updateFormValues] = useState([])
+    // const[userProfile, updateUserProfile] = useState([])
 
-    useEffect(() => {    //retreiving all formValues GET
+    useEffect(() => {    //retreiving all userProfile GET
         function fetchData() {
-            getCurrentUserAPIMethod().then((formValues) => { 
-            updateFormValues(formValues);
+            getCurrentUserAPIMethod().then((userProfile) => { 
+            updateUserProfile(userProfile);
             }).catch((err) => {
                 console.error('Error retrieving note data: ' + err);
             });
@@ -19,19 +19,51 @@ function EditProfile(){
       }, []);
 
     const handleChangeProfile = (e)=>{ //Update PUT
-        updateFormValues((prevValues)=>(
+        updateUserProfile((prevValues)=>(
             {...prevValues, [e.target.name] : e.target.value }))
+    }
+    const handleImageSelected = (event) => {
+        console.log("New File Selected");
+        if (event.target.files && event.target.files[0]) {
+
+            // Could also do additional error checking on the file type, if we wanted
+            // to only allow certain types of files.
+            const selectedFile = event.target.files[0];
+            console.dir(selectedFile);
+
+            const formData = new FormData();
+            // TODO: You need to create an "unsigned" upload preset on your Cloudinary account
+            // Then enter the text for that here.
+            const unsignedUploadPreset = 'pyf8kc0j'
+            formData.append('file', selectedFile);
+            formData.append('upload_preset', unsignedUploadPreset);
+
+            console.log("Cloudinary upload");
+            uploadImageToCloudinaryAPIMethod(formData).then((response) => {
+                console.log("Upload success");
+                console.dir(response);
+
+                // Now the URL gets saved to the author
+                const updatedProfile = {...userProfile, "profile_url": response.url};
+                updateUserProfile(updatedProfile);
+
+                // Now we want to make sure this is updated on the server – either the
+                // user needs to click the submit button, or we could trigger the server call here
+            });
+        }
+    }
+    const handleRemoveImage = () =>{
+        userProfile.profile_url="";
     }
     const onSave = (e) =>{
         alert("Saved");
-        updateUserAPIMethod(formValues).then((response) => {
-            console.log("Updated user on the server");
+        updateUserAPIMethod(userProfile).then((response) => {
+            console.log("Updated userProfile on the server");
         }).catch(err => {
-          console.log(formValues)
-          console.error('Error updating user data: ' + err);
+          console.log(userProfile)
+          console.error('Error updating userProfile data: ' + err);
         })
         closeModal();
-        console.log(formValues)
     }
     const closeModal = () =>{
         document.getElementById('editP').style.display= "none";
@@ -48,17 +80,23 @@ function EditProfile(){
                                     className="close" title="Close Modal"><span className="material-icons">close</span></button>
                         </div>
                         <div className="p1">
-                        <img src={profileImg} />
-                            <button><span>Add New Image</span></button>
-                            <button><span>Remove Image</span></button>
+                        {userProfile.profile_url?
+                            <img src={userProfile.profile_url} alt="profile"/>:
+                            <img src={profileImg} />
+                        }
+
+                            <input type="file" id="file-input" onChange={handleImageSelected}></input>
+                            <label htmlFor="file-input" style={{fontSize:'15px'}} className="handleImageBtn"><span>Add New Image</span></label>
+                            {/* <button><span>Add New Image</span></button> */}
+                            <button onClick={handleRemoveImage} className="handleImageBtn"><span>Remove Image</span></button>
                         </div>
                         <div className="p2">
-                            Name<br/> <input type="text" id="Name"  name="Name" value={formValues.Name ? formValues.Name : ''}
+                            Name<br/> <input type="text" id="Name"  name="Name" value={userProfile.Name ? userProfile.Name : ''}
                                                 onChange={handleChangeProfile}/><br/>
-                            Email<br/> <input type="text" id="Email" size="30" name="Email" value={formValues.Email ? formValues.Email : ''}
+                            Email<br/> <input type="text" id="Email" size="30" name="Email" value={userProfile.Email ? userProfile.Email : ''}
                                                 onChange={handleChangeProfile}/><br/>
                             Color Scheme<br/>
-                            <select className ="select" onChange={handleChangeProfile} id="Theme" name="Theme" value = {formValues.Theme ? formValues.Theme : ''}>
+                            <select className ="select" onChange={handleChangeProfile} id="Theme" name="Theme" value = {userProfile.Theme ? userProfile.Theme : ''}>
                                 <option value="Light">Light</option>
                                 <option value="Dark">Dark</option>
                             </select>

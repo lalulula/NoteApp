@@ -1,5 +1,6 @@
 import './App.css';
 import React, { useCallback, useEffect, useState } from 'react';
+import LoginPage from './components/loginPage';
 import Left from './components/left'
 import Right from './components/right'
 import EditProfile from './components/editProfile'
@@ -7,7 +8,12 @@ import {createNoteAPIMethod, getNotesAPIMethod, deleteNoteByIdAPIMethod, updateN
 
 function App(){
   const [notes, setNotes] = useState([]);
-  const[selectedNoteId, setSelectedNoteId] = useState('');
+  const[selectedNoteId, setSelectedNoteId] = useState(notes.length>0 ? notes[0]._id:'');
+  const [showSideBar, setShowSideBar] = useState(false);
+  const[searchText, setSearchText] = useState('');
+  const[user, setUser] = useState(null);
+  const[userProfile, updateUserProfile] = useState([])
+
 
   const getSelectedNote=()=>{
     return notes.find((note) => note._id === selectedNoteId);
@@ -18,11 +24,16 @@ function App(){
     function fetchData() {
         getNotesAPIMethod().then((notes) => { //retreiving all notes
             setNotes(notes);
-            // console.dir(notes);
+            if(notes.length>0){
+              const sortedNotes = notes.sort((a , b)=> Date.parse(b.lastUpdatedDate) - Date.parse(a.lastUpdatedDate));
+              // console.log(notes[0]);
+              setSelectedNoteId(sortedNotes[0]._id)
+            }
         }).catch((err) => {
             console.error('Error retrieving note data: ' + err);
         });
     };
+    
     fetchData();
 }, [setNotes]);
 
@@ -78,7 +89,7 @@ function App(){
 
 
   const onEditNote = (updatedNote) => {
-    if(notes.indexOf(selectedNote)!=0){
+    if(notes.indexOf(selectedNote)!==0){
       notes.splice(notes.indexOf(selectedNote), 1);
       notes.splice(0, 0, selectedNote);
     }
@@ -90,13 +101,7 @@ function App(){
       return note;
     });
     setNotes(updatedNotesArray);
-
-    updateNoteAPIMethod(updatedNote).then((response) => {
-      console.log("Updated note on the server");
-    }).catch(err => {
-    console.error('Error updating note data: ' + err);
-    })
-    saveNotesOnServer(updatedNote)
+    saveNotesOnServer(updatedNote);
 }
   
   function debounce(func, timeout=1000){
@@ -125,8 +130,6 @@ window.onclick = function(event) {
     document.getElementById('editP').style.display= "block"
   }
 /////////////////////////SEARCH///////////////////////////////////////
-const[searchText, setSearchText] = useState('');
-
 const clearSearchBar =() =>{
   console.log("notes after", notes);
   setSelectedNoteId(notes[0]._id);
@@ -153,39 +156,49 @@ function useWindowDimensions() {
 }
 const screenDimension = useWindowDimensions();
 
-const [showSideBar, setShowSideBar] = useState(false);
+
 const back2SideBar = () =>{
   setShowSideBar(true);
 }
 
+  // if(!user){
+  //   return(<LoginPage user={user}
+  //                     setUser={setUser}/> );
+  //   }
+
   return (
     <React.Fragment>
-      <div id="container">  
-          <Left 
-              notes={notes.filter((note)=>note.text.toLowerCase().includes(searchText))} 
-              addNote = { addNote } 
+
+      <div id="container">
+          <Left
+              notes={notes.filter((note)=>note.text.includes(searchText))}
+              addNote = { addNote }
               profileClicked = { profileClicked }
               selectedNoteId ={ selectedNoteId }
+              setSelectedNoteId={setSelectedNoteId}
               selectedNote = { getSelectedNote() }
               handleSelectedNote ={ handleSelectedNote }
-              handleSearchText ={setSearchText}
-              setSelectedNoteId={setSelectedNoteId}
               showSideBar = {showSideBar}
               ifSmallScreen = {screenDimension.width <= 500}
+              handleSearchText ={setSearchText}
               clearSearchBar={clearSearchBar}
-               />     
+              userProfile={userProfile}
+               />
 
-          <Right 
-              notes={notes} 
-              deleteNote ={ deleteNote } 
+          <Right
+              notes={notes}
+              deleteNote ={ deleteNote }
               selectedNote = { getSelectedNote() }
+              setSelectedNoteId={setSelectedNoteId}
               onEditNote = {onEditNote}
               back2SideBar ={ back2SideBar }
               showSideBar = {showSideBar}
               ifSmallScreen = {screenDimension.width <= 500}
               />
-   
-          <EditProfile/>
+
+          <EditProfile
+                userProfile={userProfile}
+                updateUserProfile={updateUserProfile}/>
       </div>
 
     </React.Fragment>

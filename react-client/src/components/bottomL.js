@@ -3,6 +3,7 @@ import Note from './note';
 import Search from './search';
 function BottomLeft({ notes,selectedNote, selectedNoteId, handleSelectedNote, handleSearchText, setSelectedNoteId, clearSearchBar}){
     const sortedNotes = notes.sort((a , b)=> Date.parse(b.lastUpdatedDate) - Date.parse(a.lastUpdatedDate));
+
         return(
             <div className="bottomL">
                     <Search 

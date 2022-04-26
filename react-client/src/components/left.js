@@ -3,7 +3,7 @@ import React  from 'react';
 import TopLeft from './topL'
 import BottomLeft from './bottomL'
 
-function Left({clearSearchBar,notes , addNote, profileClicked,selectedNote, selectedNoteId, handleSelectedNote, handleSearchText , setSelectedNoteId,ifSmallScreen,showSideBar}){
+function Left({clearSearchBar, notes , addNote, profileClicked, selectedNote, selectedNoteId, handleSelectedNote, handleSearchText , setSelectedNoteId,ifSmallScreen,showSideBar, userProfile}){
 
     return(
         
@@ -14,7 +14,8 @@ function Left({clearSearchBar,notes , addNote, profileClicked,selectedNote, sele
                 >  
             <TopLeft 
                 addNote = { addNote } 
-                profileClicked = { profileClicked }/>
+                profileClicked = { profileClicked }
+                userProfile={userProfile}/>
             <BottomLeft 
                 notes = { notes }
                 selectedNoteId ={ selectedNoteId }

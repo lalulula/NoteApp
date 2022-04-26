@@ -1,19 +1,20 @@
 import React  from 'react';
 
-function Search({clearSearchBar, handleSearchText,notes,setSelectedNoteId, selectedNote}){
+function Search({clearSearchBar, handleSearchText, notes, setSelectedNoteId}){
 
     const handleOnClick=()=>{
         document.getElementById('clearSearchBtn').style.color='steelblue';
     }
 
     const handleOnChange=(e)=>{
+        console.log(notes)
         handleSearchText(e.target.value);
-        // console.log(notes)
-        // console.log(selectedNote)
+        console.log(e.target.value);
         if(notes.length === 0){
             return;
         }
         else{
+            console.log(notes[0]);
             setSelectedNoteId(notes[0]._id);
         }
         document.getElementById('clearSearchBtn').style.color='steelblue';
@@ -27,7 +28,7 @@ function Search({clearSearchBar, handleSearchText,notes,setSelectedNoteId, selec
     return(
         <div className= "search">
                         <span className="material-icons">search</span>
-                        <input id="searchBar" onChange={handleOnChange} onClick={handleOnClick} disabled={selectedNote ? false : true} type="text" name="search" placeholder="Search all notes"
+                        <input id="searchBar" onChange={handleOnChange} onClick={handleOnClick}  type="text" name="search" placeholder="Search all notes"
                                   style={{border: 'none', marginTop: '10px', marginBottom: '10px'}} 
                                   autoComplete="off"/>
                         <button id="clearSearchBtn" style={{color:"transparent"}} onClick= {returnNoteList}>✖</button>
