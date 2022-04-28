@@ -1,9 +1,9 @@
 import React, { useEffect, useState} from 'react';
 import profileImg from './defaultpImg.jpg'
 import {getCurrentUserAPIMethod, updateUserAPIMethod, uploadImageToCloudinaryAPIMethod} from "../api/client";
-import {createUserAPIMethod, deleteUserByIdAPIMethod} from "../api/client";
+import {userLogoutMethod} from "../api/client";
 
-function EditProfile({userProfile, updateUserProfile}){
+function EditProfile({user,setUser,userProfile, updateUserProfile}){
 
     // const[userProfile, updateUserProfile] = useState([])
 
@@ -25,9 +25,6 @@ function EditProfile({userProfile, updateUserProfile}){
     const handleImageSelected = (event) => {
         console.log("New File Selected");
         if (event.target.files && event.target.files[0]) {
-
-            // Could also do additional error checking on the file type, if we wanted
-            // to only allow certain types of files.
             const selectedFile = event.target.files[0];
             console.dir(selectedFile);
 
@@ -42,18 +39,14 @@ function EditProfile({userProfile, updateUserProfile}){
             uploadImageToCloudinaryAPIMethod(formData).then((response) => {
                 console.log("Upload success");
                 console.dir(response);
-
-                // Now the URL gets saved to the author
                 const updatedProfile = {...userProfile, "profile_url": response.url};
-                updateUserProfile(updatedProfile);
-
-                // Now we want to make sure this is updated on the server – either the
-                // user needs to click the submit button, or we could trigger the server call here
+                updateUserProfile(updatedProfile); 
             });
         }
     }
     const handleRemoveImage = () =>{
-        userProfile.profile_url="";
+        const updatedProfile = {...userProfile, "profile_url": ""};
+        updateUserProfile(updatedProfile);
     }
     const onSave = (e) =>{
         alert("Saved");
@@ -68,6 +61,17 @@ function EditProfile({userProfile, updateUserProfile}){
     const closeModal = () =>{
         document.getElementById('editP').style.display= "none";
       }
+    const handleLogout = () => {
+        console.log("CLicked",userProfile);
+        userLogoutMethod(userProfile).then((response) => {
+            console.log("Logged out");
+            setUser('');
+            console.log(user);
+        }).catch(err => {
+          console.log(userProfile)
+          console.error('Error Logging out: ' + err);
+        })
+    }
 
     return(
             <div id="editP" className="modal">
@@ -103,7 +107,7 @@ function EditProfile({userProfile, updateUserProfile}){
                         </div>
                         <div className="p3">
                             <button onClick = {onSave}><span className="save">Save</span></button>
-                            <button><span>Logout</span></button>
+                            <button onClick={handleLogout}><span>Logout</span></button>
                         </div>
                     </div>
                     {/* </form> */}

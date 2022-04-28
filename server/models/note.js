@@ -8,7 +8,8 @@ var NoteSchema = new Schema(
     {
         text: {type: String},
         lastUpdatedDate: {type: Date, default: Date.now},
-        tags: [ {id: String, text: String} ]
+        tags: [ {id: String, text: String} ],
+        agent: { type: Schema.Types.ObjectId, ref: 'User', required: false }
     },{versionKey: false }
 );
 //Export model

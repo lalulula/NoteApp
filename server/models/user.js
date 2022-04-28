@@ -1,14 +1,15 @@
 var mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 var Schema = mongoose.Schema;
 
 var UserSchema = new Schema(
     {
         Name: {type: String, required: true},
-        Email: {type: String, required: true},
-        Theme: {type: String, enum:['Light', 'Dark']},
-        profile_url: {type: String},
-        password:{type:String}
+        Email: {type: String, required: true, trim:true},
+        Theme: {type: String, enum:['Light', 'Dark'], default:'Light'},
+        profile_url: {type: String, default:""},
+        password:{type:String, required:true,minlength: 6}
 
     },{versionKey: false }
 );

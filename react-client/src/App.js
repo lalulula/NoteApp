@@ -4,15 +4,15 @@ import LoginPage from './components/loginPage';
 import Left from './components/left'
 import Right from './components/right'
 import EditProfile from './components/editProfile'
-import {createNoteAPIMethod, getNotesAPIMethod, deleteNoteByIdAPIMethod, updateNoteAPIMethod} from "./api/client";
+import {createNoteAPIMethod, getCurrentUserAPIMethod, getNotesAPIMethod, deleteNoteByIdAPIMethod, updateNoteAPIMethod} from "./api/client";
 
 function App(){
   const [notes, setNotes] = useState([]);
-  const[selectedNoteId, setSelectedNoteId] = useState(notes.length>0 ? notes[0]._id:'');
+  const [selectedNoteId, setSelectedNoteId] = useState(notes.length>0 ? notes[0]._id:'');
   const [showSideBar, setShowSideBar] = useState(false);
-  const[searchText, setSearchText] = useState('');
-  const[user, setUser] = useState(null);
-  const[userProfile, updateUserProfile] = useState([])
+  const [searchText, setSearchText] = useState('');
+  const [user, setUser] = useState('');
+  const [userProfile, updateUserProfile] = useState([]);
 
 
   const getSelectedNote=()=>{
@@ -22,11 +22,12 @@ function App(){
 
   useEffect(() => {
     function fetchData() {
+      setUser(user);
+      console.log('NO USER?', !user);
         getNotesAPIMethod().then((notes) => { //retreiving all notes
             setNotes(notes);
             if(notes.length>0){
               const sortedNotes = notes.sort((a , b)=> Date.parse(b.lastUpdatedDate) - Date.parse(a.lastUpdatedDate));
-              // console.log(notes[0]);
               setSelectedNoteId(sortedNotes[0]._id)
             }
         }).catch((err) => {
@@ -44,7 +45,8 @@ function App(){
     const newNote = {
       text:"New Note",
       lastUpdatedDate: Date.now(),
-      tags:[]
+      tags:[],
+      agent: user
     };
     createNoteAPIMethod(newNote).then((response) => {
       console.log("Created the note on the server");
@@ -160,15 +162,17 @@ const screenDimension = useWindowDimensions();
 const back2SideBar = () =>{
   setShowSideBar(true);
 }
+useEffect(() => { 
+  getCurrentUserAPIMethod().then((response) => { 
+    setUser(response)}, [user])});
 
-  // if(!user){
-  //   return(<LoginPage user={user}
-  //                     setUser={setUser}/> );
-  //   }
+  if(!user){
+    return(<LoginPage user={user}
+                      setUser={setUser}/> );
+    }
 
   return (
     <React.Fragment>
-
       <div id="container">
           <Left
               notes={notes.filter((note)=>note.text.includes(searchText))}
@@ -197,6 +201,8 @@ const back2SideBar = () =>{
               />
 
           <EditProfile
+                user={user}
+                setUser={setUser}
                 userProfile={userProfile}
                 updateUserProfile={updateUserProfile}/>
       </div>

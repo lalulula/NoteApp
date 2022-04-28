@@ -4,7 +4,34 @@ const defaultHeaders = {
         'Content-Type': 'application/json; charset=UTF-8'
     },
 }
-///////////////////////////////////////////////Note///////////////////////////////////////////////////////////
+//////////////////////////Login////////////////////////////////////////////////////
+export const userLoginMethod = (user) => {
+    console.log(user);
+    console.log(JSON.stringify(user));
+    return fetch(`/api/login`, {
+        ...defaultHeaders,
+        method: 'POST', 
+        body: JSON.stringify(user),
+    }).then(checkStatus)
+    // .then(parseJSON);
+}
+export const userRegisterMethod = (user) => {
+    return fetch(`/api/register`, {
+        ...defaultHeaders,
+        method: 'POST', 
+        body: JSON.stringify(user),
+    }).then(checkStatus)
+        .then(parseJSON);
+}
+export const userLogoutMethod = (user) => {
+    return fetch(`/api/logout`, {
+        ...defaultHeaders,
+        method: 'POST', 
+        body: JSON.stringify(user),
+    }).then(checkStatus)
+        // .then(parseJSON);
+}
+//////////////////////////Note///////////////////////////////////////////////////////////
 // More on the fetch method: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
 export const getNotesAPIMethod = () => {
     return fetch(`/api/notes`, {
@@ -37,7 +64,7 @@ export const deleteNoteByIdAPIMethod = (noteId) => {
     }).then(checkStatus)
         .then(parseJSON);
 }
-///////////////////////////////////////////////User//////////////////////////////////////////////////////////
+///////////////////////////User//////////////////////////////////////////////////////////////////////////////
 export const getUserAPIMethod = () => {
     return fetch(`/api/users`, {
         ...defaultHeaders,
@@ -80,20 +107,6 @@ export const uploadImageToCloudinaryAPIMethod = (formData) => {
         .then(parseJSON);
 }
 
-// export const deleteUserByIdAPIMethod = (userId) => {
-//     return fetch(`/api/users/${userId}`, {
-//         ...defaultHeaders,
-//         method: 'DELETE',
-//     }).then(checkStatus)
-//         .then(parseJSON);
-// }
-
-// export const getUserByIdAPIMethod = (userId) => {
-//     return fetch(`/api/users/${userId}`, {
-//         ...defaultHeaders,
-//     }).then(checkStatus)
-//         .then(parseJSON);
-// }
 
 
 function checkStatus(response) {

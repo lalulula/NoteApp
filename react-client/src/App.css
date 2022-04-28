@@ -146,7 +146,8 @@ input:focus {
 }
 img {
   width: 30px;
-  border-radius: 50%;
+  height: 30px;
+  border-radius: 70%;
 }
 .topL .myNotes {
   margin-top: 10px;
@@ -268,8 +269,9 @@ img {
 }
 #editP img {
   width: 40px;
+  height: 40px;
   margin-left: 10px;
-  border-radius: 50%;
+  border-radius: 70px;
 }
 
 #editP input {
@@ -311,7 +313,7 @@ input#file-input{
 .loginForm{
   background-color: white;
   border-radius: 5%;
-  padding:10px 20px 20px 15px ;
+  padding:20px 20px 20px 15px ;
 }
 input:focus {
   outline: none;
@@ -322,7 +324,7 @@ input:focus {
 .login{
   background-color: #517ec7;
   color: white;
-  margin:15px 0px 15px 0px;
+  margin:0px 0px 15px 0px;
   padding:10px 0px 10px 0px;
   border-radius: 5px;
   border: none;
@@ -343,7 +345,7 @@ input:focus {
 }
 /*////////////////////////////////////////////////////*/
 .editLoginContainer {
-  padding: 5px 10px 30px 10px;
+  padding: 5px 10px 5px 10px;
   align-items: center;
 }
 /* The Modal (background) */
