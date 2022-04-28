@@ -65,7 +65,7 @@ function EditProfile({user,setUser,userProfile, updateUserProfile}){
         console.log("CLicked",userProfile);
         userLogoutMethod(userProfile).then((response) => {
             console.log("Logged out");
-            setUser('');
+            setUser(null);
             console.log(user);
         }).catch(err => {
           console.log(userProfile)

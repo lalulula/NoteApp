@@ -79,6 +79,13 @@ export const getCurrentUserAPIMethod = () => {
     }).then(checkStatus)
         .then(parseJSON);
 }
+// export const getUserByIdAPIMethod = (userId) => {
+//     return fetch(`/api/users/${userId}`, {
+//         ...defaultHeaders,
+//     }).then(checkStatus)
+//         .then(parseJSON);
+// }
+
 
 export const updateUserAPIMethod = (user) => {
     return fetch(`/api/users/${user._id}`, {
@@ -106,6 +113,15 @@ export const uploadImageToCloudinaryAPIMethod = (formData) => {
     }).then(checkStatus)
         .then(parseJSON);
 }
+
+// export const deleteUserByIdAPIMethod = (userId) => {
+//     return fetch(`/api/users/${userId}`, {
+//         ...defaultHeaders,
+//         method: 'DELETE',
+//     }).then(checkStatus)
+//         .then(parseJSON);
+// }
+
 
 
 

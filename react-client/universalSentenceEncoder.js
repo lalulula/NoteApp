@@ -19,7 +19,8 @@ export const loadModel = function() {
         });
     }
 };
-
+// determineRelatednessOfSentences();
+// loadModel();
 /**
  * This function takes an array of strings and determines a score (from 0 to 1) of how related each string is to the
  *     text at the comparisonIndex. Higher scores = more related.

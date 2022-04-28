@@ -1,4 +1,3 @@
-import { response } from 'express';
 import React , { useState }   from 'react';
 import { userRegisterMethod, userLoginMethod, getCurrentUserAPIMethod} from "../api/client";
 
@@ -43,22 +42,24 @@ function LoginPage({user,setUser}){
         const val = e.target.value;
         setName(val);
     }
-    const handleLogin = async ()=>{
-        try {
-            await userLoginMethod({Email: email, password: pwd});
-            const userInfo = await getCurrentUserAPIMethod();
-            setUser(userInfo);
-            console.log("userInfo", userInfo);
-        } catch (err){
+    // const handleLogin = async ()=>{
+    //     try {
+    //         await userLoginMethod({Email: email, password: pwd});
+    //         const userInfo = await getCurrentUserAPIMethod();
+    //         setUser(userInfo);
+    //         console.log("userInfo", userInfo);
+    //     } catch (err){
+    //         console.error('Error updating user data: ' + err);
+    //         setErrorMessage("Error: Invalid email and/or password");
+    //     }
+    // }
+    const handleLogin = ()=>{
+        userLoginMethod({Email: email, password: pwd}).then((response)=>{
+            setUser(response);
+        }).catch((err) => {
             console.error('Error updating user data: ' + err);
             setErrorMessage("Error: Invalid email and/or password");
-        }
-    }
-    // const handleLogin = ()=>{
-    //     userLoginMethod({Email: email, password: pwd}).then((response)=>{
-    //         setUser(response);
-    //     })
-    // }
+        });}
 
     const handleRegister = async ()=>{
         console.log("Email",email);

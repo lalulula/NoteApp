@@ -11,7 +11,7 @@ function App(){
   const [selectedNoteId, setSelectedNoteId] = useState(notes.length>0 ? notes[0]._id:'');
   const [showSideBar, setShowSideBar] = useState(false);
   const [searchText, setSearchText] = useState('');
-  const [user, setUser] = useState('');
+  const [user, setUser] = useState(null);
   const [userProfile, updateUserProfile] = useState([]);
 
 
