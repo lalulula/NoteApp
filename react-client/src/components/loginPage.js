@@ -27,7 +27,7 @@ function LoginPage({user,setUser}){
     }
 
     const handleSubmitForm=(e)=>{
-        e.preventDefault()
+        e.preventDefault();
     }
     
     const handleChangeEmail = (e) =>{
@@ -59,7 +59,8 @@ function LoginPage({user,setUser}){
         }).catch((err) => {
             console.error('Error updating user data: ' + err);
             setErrorMessage("Error: Invalid email and/or password");
-        });}
+        });
+    }
 
     const handleRegister = async ()=>{
         console.log("Email",email);
@@ -92,7 +93,7 @@ function LoginPage({user,setUser}){
 
                         <label htmlFor="password">Password</label>
                         <input className="loginInput" type="password" name="password" onChange={handleChangePwd} autoComplete="off" style={{width: '98%'}} /><br/>
-                        {errorMessage && pwd &&
+                        {(errorMessage || pwd) &&
                         <div id="errorMessage" style={errorStyle}>{errorMessage}</div>}
                         <div id="errorMessage" style={errorStyle}></div>
 

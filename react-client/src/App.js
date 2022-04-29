@@ -22,8 +22,6 @@ function App(){
 
   useEffect(() => {
     function fetchData() {
-      setUser(user);
-      console.log('NO USER?', !user);
         getNotesAPIMethod().then((notes) => { //retreiving all notes
             setNotes(notes);
             if(notes.length>0){
@@ -34,9 +32,8 @@ function App(){
             console.error('Error retrieving note data: ' + err);
         });
     };
-    
     fetchData();
-}, [setNotes]);
+}, []);
 
   const addNote = () => {
     setSearchText('');
@@ -158,13 +155,15 @@ function useWindowDimensions() {
 }
 const screenDimension = useWindowDimensions();
 
-
 const back2SideBar = () =>{
   setShowSideBar(true);
 }
+
+
 useEffect(() => { 
   getCurrentUserAPIMethod().then((response) => { 
-    setUser(response)}, [user])});
+    // console.log("hi");
+    setUser(response)}, [])});
 
   if(!user){
     return(<LoginPage user={user}

@@ -54,7 +54,7 @@ function wrapAsync(fn) {
 app.use((req, res, next) => {
     // We can set variables on the request, which we can then access in a future method
     req.requestTime = Date.now();
-    console.log(req.method, req.path);
+    // console.log(req.method, req.path);
     // Calling next() makes it go to the next function that will handle the request
     next();
 });
@@ -69,11 +69,14 @@ app.post('/api/register', wrapAsync(async function (req, res) {
 }));
 
 app.post('/api/login', wrapAsync(async function (req, res) {
+    console.log("req.body", req.body);
     const {password, Email} = req.body;
     const user = await User.findAndValidate(Email, password);
+    console.log("email:", Email);
+    console.log("user", user);
     if (user) {
         req.session.userId = user._id;
-        // res.sendStatus(204);
+        res.sendStatus(204);
     } else {
         res.sendStatus(401);
     }
@@ -107,7 +110,7 @@ app.post('/api/notes', isLoggedIn,  wrapAsync(async function (req,res) {
         res.json(newNote);
 }))
 //deleting a note with id
-app.delete('/api/notes/:id',isLoggedIn,  async function (req,res){
+app.delete('/api/notes/:id', isLoggedIn,  async function (req,res){
     const id = req.params.id;
     const result = await Note.findByIdAndDelete(id);
     console.log("Deleted successfully: " + result);
@@ -133,6 +136,7 @@ app.get('/api/users', async function (req,res) {
 //getting CURRENT user
 app.get('/api/users/currentUser', async function (req,res) {
     const user = await User.findById(req.session.userId);
+    // console.log(user);
     res.json(user);
     // console.log('userId in session', req.session.userId);
     // console.log("founddUser", user);

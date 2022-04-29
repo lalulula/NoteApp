@@ -5,8 +5,6 @@ import {userLogoutMethod} from "../api/client";
 
 function EditProfile({user,setUser,userProfile, updateUserProfile}){
 
-    // const[userProfile, updateUserProfile] = useState([])
-
     useEffect(() => {    //retreiving all userProfile GET
         function fetchData() {
             getCurrentUserAPIMethod().then((userProfile) => { 
