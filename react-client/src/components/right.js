@@ -5,6 +5,7 @@ import BottomRight from './bottomR'
 function Right({ notes, setSelectedNoteId , deleteNote, selectedNote,  back2SideBar, onEditNote, ifSmallScreen, showSideBar}){
 
     return(
+        
         <div className="right" 
             style={ifSmallScreen? 
                     {display: showSideBar? 'none': 'block'}: 

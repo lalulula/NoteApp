@@ -170,13 +170,13 @@ app.post('/api/users/:id/file', upload.single('image'), wrapAsync(async function
 }));
 
 app.use((err, req, res, next) => {
-    console.log("Error handling called");
     res.statusMessage = err.message;
-
     if (err.name === 'ValidationError') {
         res.status(400).end();
+        console.log(res.statusMessage);
     } else {
         res.status(500).end();
+        console.log(res.statusMessage);
     }
 })
 

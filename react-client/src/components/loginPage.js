@@ -1,7 +1,7 @@
 import React , { useState }   from 'react';
-import { userRegisterMethod, userLoginMethod, getCurrentUserAPIMethod} from "../api/client";
+import { userRegisterMethod,getNotesAPIMethod, userLoginMethod, getCurrentUserAPIMethod} from "../api/client";
 
-function LoginPage({user,setUser}){
+function LoginPage({setNotes,setSelectedNoteId, setUser}){
     const [email, setEmail] = useState("");
     const [pwd, setPwd] = useState("");
     const [name, setName] = useState("");
@@ -42,17 +42,7 @@ function LoginPage({user,setUser}){
         const val = e.target.value;
         setName(val);
     }
-    // const handleLogin = async ()=>{
-    //     try {
-    //         await userLoginMethod({Email: email, password: pwd});
-    //         const userInfo = await getCurrentUserAPIMethod();
-    //         setUser(userInfo);
-    //         console.log("userInfo", userInfo);
-    //     } catch (err){
-    //         console.error('Error updating user data: ' + err);
-    //         setErrorMessage("Error: Invalid email and/or password");
-    //     }
-    // }
+  
     const handleLogin = ()=>{
         userLoginMethod({Email: email, password: pwd}).then((response)=>{
             setUser(response);
@@ -60,6 +50,21 @@ function LoginPage({user,setUser}){
             console.error('Error updating user data: ' + err);
             setErrorMessage("Error: Invalid email and/or password");
         });
+        //////(UN)COMMENT HERE////////////
+        getNotesAPIMethod().then((notes) => { //retreiving all notes
+            setNotes(notes);
+            if(notes.length>0){
+              const sortedNotes = notes.sort((a , b)=> Date.parse(b.lastUpdatedDate) - Date.parse(a.lastUpdatedDate));
+              setSelectedNoteId(sortedNotes[0]._id)
+            }
+        }).catch((err) => {
+            console.error('Error retrieving note data: ' + err);
+        });
+        if(errorMessage!=null){
+            window.location.reload(1);
+        }
+
+        ////////////////////////////////////
     }
 
     const handleRegister = async ()=>{

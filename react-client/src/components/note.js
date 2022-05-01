@@ -1,5 +1,6 @@
 import React from 'react';
 
+
 function Note({id, text, date, selectedNoteId, handleSelectedNote }){
     const divStyle = {display:'flex', justifyContent: "space-between"}
 
@@ -10,7 +11,7 @@ function Note({id, text, date, selectedNoteId, handleSelectedNote }){
             <div className='note_date'>
                 <div style={divStyle}>
                     {date}
-                    {/* <div>similar</div> */}
+                    {/* <div class="similar">similar</div> */}
                 </div>
             </div>
         </div>       

@@ -5,6 +5,8 @@ import Left from './components/left'
 import Right from './components/right'
 import EditProfile from './components/editProfile'
 import {createNoteAPIMethod, getCurrentUserAPIMethod, getNotesAPIMethod, deleteNoteByIdAPIMethod, updateNoteAPIMethod} from "./api/client";
+// import * from "./universalSentenceEncoder"
+
 
 function App(){
   const [notes, setNotes] = useState([]);
@@ -22,17 +24,23 @@ function App(){
 
   useEffect(() => {
     function fetchData() {
-        getNotesAPIMethod().then((notes) => { //retreiving all notes
-            setNotes(notes);
-            if(notes.length>0){
-              const sortedNotes = notes.sort((a , b)=> Date.parse(b.lastUpdatedDate) - Date.parse(a.lastUpdatedDate));
-              setSelectedNoteId(sortedNotes[0]._id)
-            }
-        }).catch((err) => {
-            console.error('Error retrieving note data: ' + err);
-        });
-    };
-    fetchData();
+     
+      getCurrentUserAPIMethod().then((response) => { 
+        console.log("hi");
+        setUser(response);
+      }, []);
+
+      getNotesAPIMethod().then((notes) => { //retreiving all notes
+          setNotes(notes);
+          if(notes.length>0){
+            const sortedNotes = notes.sort((a , b)=> Date.parse(b.lastUpdatedDate) - Date.parse(a.lastUpdatedDate));
+            setSelectedNoteId(sortedNotes[0]._id)
+          }
+      }).catch((err) => {
+          console.error('Error retrieving note data: ' + err);
+      });
+  };
+  fetchData();
 }, []);
 
   const addNote = () => {
@@ -137,9 +145,7 @@ const clearSearchBar =() =>{
 ////////////////////window size getter/////////////////////////////////
 function getWindowDimensions() {
   const { innerWidth: width} = window;
-  return {
-    width
-  };
+  return {width};
 }
 function useWindowDimensions() {
   const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
@@ -159,15 +165,15 @@ const back2SideBar = () =>{
   setShowSideBar(true);
 }
 
-
-useEffect(() => { 
-  getCurrentUserAPIMethod().then((response) => { 
-    // console.log("hi");
-    setUser(response)}, [])});
+// useEffect(() => { 
+//   getCurrentUserAPIMethod().then((response) => { 
+//     console.log("hi");
+//     setUser(response)}, [])});
 
   if(!user){
-    return(<LoginPage user={user}
-                      setUser={setUser}/> );
+    return(<LoginPage setUser={setUser}
+                      setNotes={setNotes}
+                      setSelectedNoteId={setSelectedNoteId}/> );
     }
 
   return (

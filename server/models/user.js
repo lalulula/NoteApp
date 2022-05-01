@@ -4,18 +4,15 @@ const bcrypt = require('bcrypt');
 var Schema = mongoose.Schema;
 
 var validateEmail = function(email){
-    var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    var re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
     return re.test(email);
 }
 
 var UserSchema = new Schema(
     {
-        Name: {type: String, required: true},
-        Email: {type: String, required: true, trim:true, unique:true},
-        Theme: {type: String, enum:['Light', 'Dark'], default:'Light', 
-                // validate:[validateEmail, 'Please fill a valid Email'],
-                // match:[/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid Email']
-            },
+        Name: {type: String, required: true, unique:true},
+        Email: {type: String, required: true, trim:true, unique:true,validate:[validateEmail, 'Please fill a valid Email']},
+        Theme: {type: String, enum:['Light', 'Dark'], default:'Light'},
         profile_url: {type: String, default:""},
         password:{type:String, required:true, minlength: 6}
 
