@@ -21,6 +21,11 @@ function BottomRight( {notes, selectedNote , onEditNote, tags, handleDrag}){
             lastUpdatedDate: Date.now(),
             tags:tags
         } 
+        for(let i = 0; i<notes.length; i++){
+            document.getElementsByClassName('note_container')[i].style.backgroundColor ='white';
+            document.getElementsByClassName('similar')[i].innerHTML="";
+        }
+        document.getElementsByClassName('selected_note')[0].style.backgroundColor ='#E5F1FD';
         onEditNote(newNote);
 
     }
