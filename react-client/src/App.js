@@ -5,12 +5,12 @@ import Left from './components/left'
 import Right from './components/right'
 import EditProfile from './components/editProfile'
 import {createNoteAPIMethod, getCurrentUserAPIMethod, getNotesAPIMethod, deleteNoteByIdAPIMethod, updateNoteAPIMethod} from "./api/client";
-// import * from "./universalSentenceEncoder"
-
+import {loadModel,determineRelatednessOfSentences} from "./universalSentenceEncoder"
+loadModel();
 
 function App(){
   const [notes, setNotes] = useState([]);
-  const [selectedNoteId, setSelectedNoteId] = useState(notes.length>0 ? notes[0]._id:'');
+  const [selectedNoteId, setSelectedNoteId] = useState('');
   const [showSideBar, setShowSideBar] = useState(false);
   const [searchText, setSearchText] = useState('');
   const [user, setUser] = useState(null);
@@ -22,26 +22,49 @@ function App(){
   }
   const selectedNote = getSelectedNote();
 
+  useEffect(() => { 
+    getCurrentUserAPIMethod().then((response) => { 
+      console.log("hi");
+      setUser(response)
+    });
+  }, []);
+
   useEffect(() => {
     function fetchData() {
-     
-      getCurrentUserAPIMethod().then((response) => { 
-        console.log("hi");
-        setUser(response);
-      }, []);
-
       getNotesAPIMethod().then((notes) => { //retreiving all notes
+        setSelectedNoteId(notes.length > 0 ? notes[0]._id:'');
           setNotes(notes);
           if(notes.length>0){
             const sortedNotes = notes.sort((a , b)=> Date.parse(b.lastUpdatedDate) - Date.parse(a.lastUpdatedDate));
             setSelectedNoteId(sortedNotes[0]._id)
           }
-      }).catch((err) => {
+      }  ).catch((err) => {
           console.error('Error retrieving note data: ' + err);
       });
-  };
+    };
+
   fetchData();
-}, []);
+}, [user]);
+
+
+useEffect(()=>{
+
+
+  console.log(selectedNoteId)
+  //Similar Notes
+  const compareNote = [];
+  for(let i = 0 ; i<notes.length; i++){
+    compareNote[i] = notes[i].text;
+  }
+  let index = notes.indexOf(selectedNote);
+  let res = determineRelatednessOfSentences(compareNote,index);
+  res.then(embeddings => {
+    console.log("embed",embeddings);
+  })
+    console.log("RES", res);
+  }, 
+  [selectedNoteId]);
+
 
   const addNote = () => {
     setSearchText('');
@@ -60,11 +83,6 @@ function App(){
      setSelectedNoteId(response._id);
   });
 }
-
-  const handleSelectedNote=(id) =>{ //clicking on a note in the list
-    setSelectedNoteId(id);
-    setShowSideBar(false);
-  }
 
   const deleteNote = (e) => {
     deleteNoteByIdAPIMethod(selectedNoteId).then((response) => {
@@ -144,7 +162,7 @@ const clearSearchBar =() =>{
 }
 ////////////////////window size getter/////////////////////////////////
 function getWindowDimensions() {
-  const { innerWidth: width} = window;
+  const {innerWidth: width} = window;
   return {width};
 }
 function useWindowDimensions() {
@@ -165,15 +183,10 @@ const back2SideBar = () =>{
   setShowSideBar(true);
 }
 
-// useEffect(() => { 
-//   getCurrentUserAPIMethod().then((response) => { 
-//     console.log("hi");
-//     setUser(response)}, [])});
 
   if(!user){
     return(<LoginPage setUser={setUser}
-                      setNotes={setNotes}
-                      setSelectedNoteId={setSelectedNoteId}/> );
+                      /> );
     }
 
   return (
@@ -186,8 +199,9 @@ const back2SideBar = () =>{
               selectedNoteId ={ selectedNoteId }
               setSelectedNoteId={setSelectedNoteId}
               selectedNote = { getSelectedNote() }
-              handleSelectedNote ={ handleSelectedNote }
+              // handleSelectedNote ={ handleSelectedNote }
               showSideBar = {showSideBar}
+              setShowSideBar={setShowSideBar}
               ifSmallScreen = {screenDimension.width <= 500}
               handleSearchText ={setSearchText}
               clearSearchBar={clearSearchBar}

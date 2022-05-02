@@ -1,7 +1,7 @@
 import React from 'react';
 import Note from './note';
 import Search from './search';
-function BottomLeft({ notes,selectedNote, selectedNoteId, handleSelectedNote, handleSearchText, setSelectedNoteId, clearSearchBar}){
+function BottomLeft({ notes,selectedNote,setShowSideBar,  selectedNoteId, handleSelectedNote, handleSearchText, setSelectedNoteId, clearSearchBar}){
     const sortedNotes = notes.sort((a , b)=> Date.parse(b.lastUpdatedDate) - Date.parse(a.lastUpdatedDate));
 
         return(
@@ -26,7 +26,9 @@ function BottomLeft({ notes,selectedNote, selectedNoteId, handleSelectedNote, ha
                                                         second: "2-digit"})
                                         } 
                                 selectedNoteId ={ selectedNoteId }
-                                handleSelectedNote ={ handleSelectedNote }/>
+                                setSelectedNoteId={setSelectedNoteId}
+                                handleSelectedNote ={ handleSelectedNote }
+                                setShowSideBar={setShowSideBar}/>
                                 )}  
                     </div>
                 </div>

@@ -1,7 +1,7 @@
 import React , { useState }   from 'react';
 import { userRegisterMethod,getNotesAPIMethod, userLoginMethod, getCurrentUserAPIMethod} from "../api/client";
 
-function LoginPage({setNotes,setSelectedNoteId, setUser}){
+function LoginPage({ setUser}){
     const [email, setEmail] = useState("");
     const [pwd, setPwd] = useState("");
     const [name, setName] = useState("");
@@ -50,21 +50,6 @@ function LoginPage({setNotes,setSelectedNoteId, setUser}){
             console.error('Error updating user data: ' + err);
             setErrorMessage("Error: Invalid email and/or password");
         });
-        //////(UN)COMMENT HERE////////////
-        getNotesAPIMethod().then((notes) => { //retreiving all notes
-            setNotes(notes);
-            if(notes.length>0){
-              const sortedNotes = notes.sort((a , b)=> Date.parse(b.lastUpdatedDate) - Date.parse(a.lastUpdatedDate));
-              setSelectedNoteId(sortedNotes[0]._id)
-            }
-        }).catch((err) => {
-            console.error('Error retrieving note data: ' + err);
-        });
-        if(errorMessage!=null){
-            window.location.reload(1);
-        }
-
-        ////////////////////////////////////
     }
 
     const handleRegister = async ()=>{

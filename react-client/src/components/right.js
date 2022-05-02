@@ -19,7 +19,7 @@ function Right({ notes, setSelectedNoteId , deleteNote, selectedNote,  back2Side
             <BottomRight 
                     notes = {notes}   
                     selectedNote = { selectedNote } 
-                    setSelectedNoteId={setSelectedNoteId}
+                    // setSelectedNoteId={setSelectedNoteId}
                     onEditNote = { onEditNote }
                     tags = {selectedNote ? selectedNote.tags: [] }
                     />
