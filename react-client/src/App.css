@@ -73,7 +73,7 @@ body {
   background-color: lightgray;
 }
 .selected_note {
-  background-color: rgb(200, 220, 228);
+  background-color: #E5F1FD;
   font-weight: bold;
   border-bottom: 2px dotted black;
 }
@@ -89,7 +89,6 @@ body {
   padding: 5px;
   padding-top: 0px;
   color: #aaaaaa;
-  font-style: italic;
   text-align: left;
   font-size: 12px;
 }
@@ -292,7 +291,7 @@ input#file-input{
 }
 /********************************** LoginPageCSS *********************************************/
 .loginBody{
-  background-color: #e5e3e3;
+  background-color: #F4F4F4;
   display: flex;
   justify-content: center;
   align-content: center;
@@ -322,7 +321,7 @@ input:focus {
   text-align: center;
 }
 .login{
-  background-color: #517ec7;
+  background-color: #3B63C5;
   color: white;
   margin:0px 0px 15px 0px;
   padding:10px 0px 10px 0px;
@@ -337,7 +336,7 @@ input:focus {
   margin-bottom: 5px;
 }
 .createAccount{
-  background-color: green;
+  background-color: #326F36;
   border: none;
   color: white;
   border-radius: 5px;
@@ -394,7 +393,7 @@ input:focus {
   text-align: center;
 }
 .signUpBtn{
-  background-color: #73b473;
+  background-color: #4AA12E;
   border-radius: 5px;
   border: none;
   color: white;

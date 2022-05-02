@@ -48,21 +48,28 @@ function App(){
 
 
 useEffect(()=>{
-
-
-  console.log(selectedNoteId)
-  //Similar Notes
   const compareNote = [];
   for(let i = 0 ; i<notes.length; i++){
     compareNote[i] = notes[i].text;
   }
   let index = notes.indexOf(selectedNote);
   let res = determineRelatednessOfSentences(compareNote,index);
-  res.then(embeddings => {
-    console.log("embed",embeddings);
+  res.then(result => {
+    // console.log("result scores",result);
+    for(let i = 0; i<notes.length; i++){
+      if(result &&(result[i].score>0.5) && (i!==index) ){
+        document.getElementsByClassName('note_container')[i].style.backgroundColor ='#E6FFFA';
+        document.getElementsByClassName('similar')[i].innerHTML = "similar";
+      }
+      else{
+        document.getElementsByClassName('selected_note')[0].style.backgroundColor ='#E5F1FD';
+        document.getElementsByClassName('note_container')[i].style.backgroundColor ='white';
+        document.getElementsByClassName('similar')[i].innerHTML = "";
+      }
+    }
   })
-    console.log("RES", res);
   }, 
+
   [selectedNoteId]);
 
 

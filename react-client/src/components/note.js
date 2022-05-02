@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-function Note({id, text, date, selectedNoteId, handleSelectedNote, setShowSideBar,  setSelectedNoteId }){
+function Note({id, text, date, selectedNoteId,  setShowSideBar,  setSelectedNoteId }){
     const divStyle = {display:'flex', justifyContent: "space-between"}
 
     const handleOnClick =(id)=>{
@@ -16,7 +16,7 @@ function Note({id, text, date, selectedNoteId, handleSelectedNote, setShowSideBa
             <div className='note_date'>
                 <div style={divStyle}>
                     {date}
-                    {/* <div class="similar">similar</div> */}
+                    <div className="similar"></div>
                 </div>
             </div>
         </div>       
