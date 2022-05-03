@@ -1,4 +1,4 @@
-import React , { useState }   from 'react';
+import React , {useState }   from 'react';
 import { userRegisterMethod,getNotesAPIMethod, userLoginMethod, getCurrentUserAPIMethod} from "../api/client";
 
 function LoginPage({ setUser}){

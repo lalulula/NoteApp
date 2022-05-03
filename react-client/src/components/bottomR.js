@@ -27,7 +27,6 @@ function BottomRight( {notes, selectedNote , onEditNote, tags, handleDrag}){
         }
         document.getElementsByClassName('selected_note')[0].style.backgroundColor ='#E5F1FD';
         onEditNote(newNote);
-
     }
 
     if(!selectedNote) {

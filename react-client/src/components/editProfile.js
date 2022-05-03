@@ -89,7 +89,6 @@ function EditProfile({user,setUser,userProfile, updateUserProfile}){
 
                             <input type="file" id="file-input" onChange={handleImageSelected}></input>
                             <label htmlFor="file-input" style={{fontSize:'15px'}} className="handleImageBtn"><span>Add New Image</span></label>
-                            {/* <button><span>Add New Image</span></button> */}
                             <button onClick={handleRemoveImage} className="handleImageBtn"><span>Remove Image</span></button>
                         </div>
                         <div className="p2">

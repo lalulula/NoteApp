@@ -12,7 +12,6 @@ function TopLeft({addNote ,  profileClicked, userProfile }){
                             <img src={userProfile.profile_url} alt="profile"/>:
                             <img src={profileImg} />
                         }
-                            {/* <img src={profileImg} className="material-icons"/> */}
                             </button>
                     <span className="myNotes">My Notes</span>
                     <button className="addNote" onClick= { addNote } ><span className="material-icons">note_add</span></button>

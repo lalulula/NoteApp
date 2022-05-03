@@ -56,15 +56,18 @@ useEffect(()=>{
   let res = determineRelatednessOfSentences(compareNote,index);
   res.then(result => {
     // console.log("result scores",result);
-    for(let i = 0; i<notes.length; i++){
-      if(result &&(result[i].score>0.5) && (i!==index) ){
-        document.getElementsByClassName('note_container')[i].style.backgroundColor ='#E6FFFA';
-        document.getElementsByClassName('similar')[i].innerHTML = "similar";
-      }
-      else{
-        document.getElementsByClassName('selected_note')[0].style.backgroundColor ='#E5F1FD';
-        document.getElementsByClassName('note_container')[i].style.backgroundColor ='white';
-        document.getElementsByClassName('similar')[i].innerHTML = "";
+    if(result){
+      for(let i = 0; i<notes.length; i++){
+        if((result[i].score>0.5) && (i!==index) ){
+          document.getElementsByClassName('note_container')[i].style.backgroundColor ='#E6FFFA';
+          document.getElementsByClassName('similar')[i].innerHTML = "similar";
+          document.getElementsByClassName('selected_note')[0].style.backgroundColor ='#E5F1FD';
+        }
+        else{
+          document.getElementsByClassName('selected_note')[0].style.backgroundColor ='#E5F1FD';
+          document.getElementsByClassName('note_container')[i].style.backgroundColor ='white';
+          document.getElementsByClassName('similar')[i].innerHTML = "";
+        }
       }
     }
   })
@@ -191,8 +194,7 @@ const back2SideBar = () =>{
 
 
   if(!user){
-    return(<LoginPage setUser={setUser}
-                      /> );
+    return(<LoginPage setUser={setUser}/> );
     }
 
   return (
@@ -204,8 +206,7 @@ const back2SideBar = () =>{
               profileClicked = { profileClicked }
               selectedNoteId ={ selectedNoteId }
               setSelectedNoteId={setSelectedNoteId}
-              selectedNote = { getSelectedNote() }
-              // handleSelectedNote ={ handleSelectedNote }
+              selectedNote = {getSelectedNote()}
               showSideBar = {showSideBar}
               setShowSideBar={setShowSideBar}
               ifSmallScreen = {screenDimension.width <= 500}

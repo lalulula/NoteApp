@@ -136,7 +136,6 @@ app.get('/api/users', async function (req,res) {
 //getting CURRENT user
 app.get('/api/users/currentUser', async function (req,res) {
     const user = await User.findById(req.session.userId);
-    // console.log(user);
     res.json(user);
     // console.log('userId in session', req.session.userId);
     // console.log("founddUser", user);
@@ -162,8 +161,6 @@ app.put('/api/users/:id', async function (req,res) {
 // In actual development we would not store it on the local server
 const upload = multer({ dest: 'uploads/'})
 app.post('/api/users/:id/file', upload.single('image'), wrapAsync(async function (req, res) {
-    // You can see the file details here – it also gets automatically saved into the uploads folder
-    // Again, this is an example of how this works but you would do something a little different in production.
     console.log("File uploaded of length: " + req.file.size);
     console.dir(req.file);
     res.json("File uploaded successfully");

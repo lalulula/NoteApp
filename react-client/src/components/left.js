@@ -25,7 +25,6 @@ function Left({clearSearchBar, notes ,setShowSideBar,  addNote, profileClicked, 
                 setSelectedNoteId={setSelectedNoteId}
                 clearSearchBar={clearSearchBar}
                 setShowSideBar={setShowSideBar}
-
                 />
         </div>
     );
