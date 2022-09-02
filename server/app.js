@@ -16,7 +16,9 @@ const sessionSecret = 'make a secret string'; //used fot encrypting data
 
 //Set up mongoose connection BASIC SETUP CODE
 // var mongoDB = 'mongodb://localhost:27017/NoteApp'; //database URL
-var mongoDB = 'mongodb+srv://YunahKim:yunah123@cluster0.hk7j3.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
+// var mongoDB = 'mongodb+srv://YunahKim:yunah123@cluster0.hk7j3.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
+var mongoDB = 'mongodb://YunahKim:yunah123@cluster0-shard-00-00.hk7j3.mongodb.net:27017,cluster0-shard-00-01.hk7j3.mongodb.net:27017,cluster0-shard-00-02.hk7j3.mongodb.net:27017/?ssl=true&replicaSet=atlas-4vmjik-shard-0&authSource=admin&retryWrites=true&w=majority';
+
 mongoose.connect(mongoDB, { useNewUrlParser: true , useUnifiedTopology: true});
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
