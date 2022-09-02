@@ -1,7 +1,7 @@
 import React , {useState }   from 'react';
 import { userRegisterMethod,getNotesAPIMethod, userLoginMethod, getCurrentUserAPIMethod} from "../api/client";
 
-function LoginPage({ setUser}){
+function LoginPage({setUser}){
     const [email, setEmail] = useState("");
     const [pwd, setPwd] = useState("");
     const [name, setName] = useState("");

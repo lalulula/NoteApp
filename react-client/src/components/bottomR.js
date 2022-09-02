@@ -13,7 +13,6 @@ function BottomRight( {notes, selectedNote , onEditNote, tags, handleDrag}){
             fontFamily: "Helvetica, Arial",
             textAlign: "center"
     }
-
     const handleChange = (value) => { 
         var newNote={
             _id: selectedNote._id,

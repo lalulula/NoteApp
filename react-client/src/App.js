@@ -22,8 +22,8 @@ function App(){
   }
   const selectedNote = getSelectedNote();
 
-  useEffect(() => { 
-    getCurrentUserAPIMethod().then((response) => { 
+  useEffect(() => {
+    getCurrentUserAPIMethod().then((response) => {
       console.log("hi");
       setUser(response)
     });
@@ -33,46 +33,46 @@ function App(){
     function fetchData() {
       getNotesAPIMethod().then((notes) => { //retreiving all notes
         setSelectedNoteId(notes.length > 0 ? notes[0]._id:'');
-          setNotes(notes);
-          if(notes.length>0){
-            const sortedNotes = notes.sort((a , b)=> Date.parse(b.lastUpdatedDate) - Date.parse(a.lastUpdatedDate));
-            setSelectedNoteId(sortedNotes[0]._id)
-          }
+        setNotes(notes);
+        if(notes.length>0){
+          const sortedNotes = notes.sort((a , b)=> Date.parse(b.lastUpdatedDate) - Date.parse(a.lastUpdatedDate));
+          setSelectedNoteId(sortedNotes[0]._id)
+        }
       }  ).catch((err) => {
-          console.error('Error retrieving note data: ' + err);
+        console.error('Error retrieving note data: ' + err);
       });
     };
 
-  fetchData();
-}, [user]);
+    fetchData();
+  }, [user]);
 
 
-useEffect(()=>{
-  const compareNote = [];
-  for(let i = 0 ; i<notes.length; i++){
-    compareNote[i] = notes[i].text;
-  }
-  let index = notes.indexOf(selectedNote);
-  let res = determineRelatednessOfSentences(compareNote,index);
-  res.then(result => {
-    // console.log("result scores",result);
-    if(result){
-      for(let i = 0; i<notes.length; i++){
-        if((result[i].score>0.5) && (i!==index) ){
-          document.getElementsByClassName('note_container')[i].style.backgroundColor ='#E6FFFA';
-          document.getElementsByClassName('similar')[i].innerHTML = "similar";
-          document.getElementsByClassName('selected_note')[0].style.backgroundColor ='#E5F1FD';
+  useEffect(()=>{
+        const compareNote = [];
+        for(let i = 0 ; i<notes.length; i++){
+          compareNote[i] = notes[i].text;
         }
-        else{
-          document.getElementsByClassName('selected_note')[0].style.backgroundColor ='#E5F1FD';
-          document.getElementsByClassName('note_container')[i].style.backgroundColor ='white';
-          document.getElementsByClassName('similar')[i].innerHTML = "";
-        }
-      }
-    }
-  })
-  }, 
-  [selectedNoteId]);
+        let index = notes.indexOf(selectedNote);
+        let res = determineRelatednessOfSentences(compareNote,index);
+        res.then(result => {
+          // console.log("result scores",result);
+          if(result){
+            for(let i = 0; i<notes.length; i++){
+              if((result[i].score>0.5) && (i!==index) ){
+                document.getElementsByClassName('note_container')[i].style.backgroundColor ='#E6FFFA';
+                document.getElementsByClassName('similar')[i].innerHTML = "similar";
+                document.getElementsByClassName('selected_note')[0].style.backgroundColor ='#E5F1FD';
+              }
+              else{
+                document.getElementsByClassName('selected_note')[0].style.backgroundColor ='#E5F1FD';
+                document.getElementsByClassName('note_container')[i].style.backgroundColor ='white';
+                document.getElementsByClassName('similar')[i].innerHTML = "";
+              }
+            }
+          }
+        })
+      },
+      [selectedNoteId]);
 
 
   const addNote = () => {
@@ -89,16 +89,16 @@ useEffect(()=>{
       console.log("Created the note on the server");
       console.dir(response);
       setNotes([response, ...notes]);
-     setSelectedNoteId(response._id);
-  });
-}
+      setSelectedNoteId(response._id);
+    });
+  }
 
   const deleteNote = (e) => {
     deleteNoteByIdAPIMethod(selectedNoteId).then((response) => {
       console.log("Deleted the note on the server");
-  });
+    });
     const index2Delete = notes.indexOf(notes.find((note) => note._id === selectedNoteId));
-    if(index2Delete === 0){ 
+    if(index2Delete === 0){
       if(notes.length===1){
         setNotes(notes.filter((note) => note._id !== e));
       }
@@ -136,8 +136,8 @@ useEffect(()=>{
     });
     setNotes(updatedNotesArray);
     saveNotesOnServer(updatedNote);
-}
-  
+  }
+
   function debounce(func, timeout=1000){
     let timer;
     return(...args) => {
@@ -147,59 +147,59 @@ useEffect(()=>{
   }
 
   const saveNotesOnServer = useCallback(debounce(( theNote ) => {
-    /* your debounced code to save to the server here */  
+    /* your debounced code to save to the server here */
     updateNoteAPIMethod(theNote).then((res)=>{
       console.dir(res);
     }).catch((err)=>{
       console.error('Error retrieving note data: ', err);
     })
-}), []);
+  }), []);
 ////////////////////////profile/////////////////////////////////////////
-window.onclick = function(event) {
-  if (event.target === document.getElementById('editP')) {
-    document.getElementById('editP').style.display = "none";
+  window.onclick = function(event) {
+    if (event.target === document.getElementById('editP')) {
+      document.getElementById('editP').style.display = "none";
+    }
   }
-}
   const profileClicked = () =>{
     document.getElementById('editP').style.display= "block"
   }
 /////////////////////////SEARCH///////////////////////////////////////
-const clearSearchBar =() =>{
-  console.log("notes after", notes);
-  setSelectedNoteId(notes[0]._id);
-  document.getElementById('clearSearchBtn').style.color='transparent'
-}
+  const clearSearchBar =() =>{
+    console.log("notes after", notes);
+    setSelectedNoteId(notes[0]._id);
+    document.getElementById('clearSearchBtn').style.color='transparent'
+  }
 ////////////////////window size getter/////////////////////////////////
-function getWindowDimensions() {
-  const {innerWidth: width} = window;
-  return {width};
-}
-function useWindowDimensions() {
-  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+  function getWindowDimensions() {
+    const {innerWidth: width} = window;
+    return {width};
+  }
+  function useWindowDimensions() {
+    const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
 
-  useEffect(() => {
-    function handleResize() {
-      setWindowDimensions(getWindowDimensions());
-    }
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);}, []);
+    useEffect(() => {
+      function handleResize() {
+        setWindowDimensions(getWindowDimensions());
+      }
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);}, []);
 
-  return windowDimensions;
-}
-const screenDimension = useWindowDimensions();
+    return windowDimensions;
+  }
+  const screenDimension = useWindowDimensions();
 
-const back2SideBar = () =>{
-  setShowSideBar(true);
-}
+  const back2SideBar = () =>{
+    setShowSideBar(true);
+  }
 
 
   if(!user){
     return(<LoginPage setUser={setUser}/> );
-    }
+  }
 
   return (
-    <React.Fragment>
-      <div id="container">
+      <React.Fragment>
+        <div id="container">
           <Left
               notes={notes.filter((note)=>note.text.includes(searchText))}
               addNote = { addNote }
@@ -213,7 +213,7 @@ const back2SideBar = () =>{
               handleSearchText ={setSearchText}
               clearSearchBar={clearSearchBar}
               userProfile={userProfile}
-               />
+          />
 
           <Right
               notes={notes}
@@ -224,16 +224,16 @@ const back2SideBar = () =>{
               back2SideBar ={ back2SideBar }
               showSideBar = {showSideBar}
               ifSmallScreen = {screenDimension.width <= 500}
-              />
+          />
 
           <EditProfile
-                user={user}
-                setUser={setUser}
-                userProfile={userProfile}
-                updateUserProfile={updateUserProfile}/>
-      </div>
+              user={user}
+              setUser={setUser}
+              userProfile={userProfile}
+              updateUserProfile={updateUserProfile}/>
+        </div>
 
-    </React.Fragment>
-    );
-  }
+      </React.Fragment>
+  );
+}
 export default App;
