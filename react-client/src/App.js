@@ -24,7 +24,7 @@ function App(){
 
   useEffect(() => {
     getCurrentUserAPIMethod().then((response) => {
-      console.log("hi");
+      // console.log("hi");
       setUser(response)
     });
   }, []);
